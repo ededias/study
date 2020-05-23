@@ -1,0 +1,6 @@
+{   
+    "mysql": "localhost",
+    "dbName": "bludv",
+    "username": "root",
+    "password": ""
+}

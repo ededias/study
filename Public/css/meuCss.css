@@ -1,0 +1,182 @@
+.menu {
+    background: linear-gradient(to right, #a64eee 0%, #3c35ce 100%);
+}
+
+.paddingTop {
+    padding-top: 150px;
+}
+
+.footersobre {
+    margin: 0 auto;
+    width: 50%;
+}
+
+.scrollChat {
+    overflow-y: auto;
+}
+
+
+/* Inicio da menu de horas */
+
+@import url(https://fonts.googleapis.com/css?family=Gudea);
+body {
+    font-family: 'Gudea', Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: black;
+}
+
+*,
+*:before,
+*:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.main {
+    padding: 2em;
+    margin: 0 auto;
+    width: 100%;
+    min-width: 460px;
+    max-width: 700px;
+}
+
+h1 {
+    text-align: center;
+    margin: 0 0 1.2em 0;
+    line-height: 150%;
+}
+
+p {
+    margin-top: 2em;
+    line-height: 150%;
+    text-align: center;
+}
+
+a {
+    color: #04D2C8;
+}
+
+a:active,
+a:focus,
+a:hover {
+    color: #E87A31;
+}
+
+.radioholder {
+    width: 48%;
+    background: #fff;
+    margin-bottom: 1em;
+    font-size: 1.3em;
+    height: 2.4em;
+    color: #1F1F1F;
+    -o-transition: .1s ease-out;
+    -ms-transition: .1s ease-out;
+    -moz-transition: .1s ease-out;
+    -webkit-transition: .1s ease-out;
+    transition: .1s ease-out;
+    cursor: pointer;
+}
+
+.activeradioholder {
+    background: #04D2C8;
+    color: #fff;
+}
+
+.radioholder .desc {
+    display: inline-block;
+    vertical-align: middle;
+    padding-left: .6em;
+    line-height: 2.4em;
+}
+
+.radioholder .tick {
+    display: inline-block;
+    vertical-align: middle;
+    width: 2.4em;
+    height: 100%;
+    background-color: #eee;
+    background-image: none;
+    -o-transition: .1s ease-out;
+    -ms-transition: .1s ease-out;
+    -moz-transition: .1s ease-out;
+    -webkit-transition: .1s ease-out;
+    transition: .1s ease-out;
+}
+
+.activeradioholder .tick {
+    background-color: #04D2C8;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAMAAACahl6sAAAAJFBMVEX////////////////////////////////////////////////Vd7HLAAAAC3RSTlMAESIzRGaZu8zd7m0smEwAAAGRSURBVHja7dtLioQwAADRsW0dP/e/7zCrgl4IgtCWVJ0gLxBCSPJTVVVVVVVVVVVVVVVVVVVVVVVVVVWfzcvwDMe+I3E7kLgdSNwOJG4HErsDidvhlwy/GMySYUGAxO5AYncgsTuQ2B1I5A4kL7eDttHuQGJ3ILE7kNgdSOwOJHYHErkDidtBU44cOXLkyPHf6yGOcburY3iKY5nlDlYuErcDiduBxO1Acq1je3/BgeQ6x/gFBxKzA4ndgUTuoGWwO5DYHUjsDiR2BxKDg5PRkUTgYGSHErsDid2BxO5AYncgsTuQ2B1Ipv1mDjo1w+vtHDTt14fDLcHhluCwS3D4JSsOqYQdxy3B4ZbgcEtwuCU4BBKBA4nWgcTuQGJ3IJE76L3ZHZwY7Q4kdgcSuwOJ3YHE7kBidyCxO5DYHUjsDiR2BxK74/z9j18yCxRIzA4kdgcSuwOJ3YHE70DidyA57xBIcFglOKySVes4ftfsluCQS3DYJTjsEr+DH0tVVVVVVVVVVVVVVVVVVVVVVVXX9Aekh8txA/HicgAAAABJRU5ErkJggg==);
+    background-size: cover;
+}
+
+.radioholder:nth-child(odd) {
+    float: right;
+}
+
+.radioholder:nth-child(even) {
+    float: left;
+}
+
+.radioholder:hover {
+    background-color: #eee;
+}
+
+.radioholder:hover .tick {
+    background-color: #ddd;
+}
+
+.activeradioholder:hover {
+    background-color: #39A9A4;
+}
+
+.activeradioholder:hover .tick {
+    background-color: #2A817C;
+}
+
+
+/* Fim menu horas */
+
+.sobre {
+    padding-left: 16%;
+}
+
+
+* {
+    box-sizing: border-box;
+  }
+ 
+  
+  .searchform {
+    display: block;
+    margin: 100;
+    margin-bottom: 100px;
+    overflow: hidden;
+    width: 100%;
+
+  }
+  label, input {
+    vertical-align: baseline;
+    color: #1F1F1F;
+  }
+  label {
+    margin: 0.125em 0.125em 0 0;
+    float: right;
+    
+  }
+  input[type="search"] {
+    border: 2px solid #E87A31;
+    border-width: 0 0 3px;
+    background-color: transparent;
+    font: 24px "Open Sans", sans-serif;
+    padding: 0.125em 0.225em;
+    width: 90%;
+    float: left;
+    
+  }
+  input[type="search"]:focus {
+    color: #1F1F1F;
+    border-color: #04D2C8;
+    outline: none;
+  }
