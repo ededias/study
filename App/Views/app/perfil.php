@@ -71,9 +71,11 @@
                             </div>
                         </div>
                         <p class="text_info">
-                            Our set he for firmament morning sixth subdue darkness creeping gathered divide our let
-                            god moving. Moving in fourth air night bring upon you’re it beast let you dominion
-                            likeness open place day
+                            <?php
+
+                            echo $this->view->perfil["descricao"];
+
+                            ?>
                         </p>
                         <ul>
                             <li><a href="#"> <i class="fa fa-envelope"></i> </a></li>
