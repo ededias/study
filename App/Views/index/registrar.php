@@ -12,6 +12,13 @@
 
                 <div class="card-body">
                     <div class="panel-body">
+                        Qual teu tipo de conta?
+                        <div class="form-group">
+                            <input type="radio" name="perfil" value="aluno" id="aluno" class="with-gap">
+                            Aluno
+                            <input type="radio" name="perfil" value="professor" id="professor" class="with-gap">
+                            Professor
+                        </div>
                         Nome completo
                         <div class="form-group form-float">
                             <div class="form-line">
@@ -27,6 +34,20 @@
 
                             </div>
                         </div>
+                        senha
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input type="password" class="form-control" name="senha" required>
+
+                            </div>
+                        </div>
+                        Repitir senha
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input type="password" class="form-control" name="rpsenha" required>
+
+                            </div>
+                        </div>
                         Telefone
                         <div class="form-group form-float">
                             <div class="form-line">
@@ -38,6 +59,13 @@
                         <div class="form-group form-float">
                             <div class="form-line">
                                 <input type="tel" class="form-control" name="CPF" required>
+
+                            </div>
+                        </div>
+                        Documento de identidade
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input type="tel" class="form-control" name="rg" required>
 
                             </div>
                         </div>
@@ -66,7 +94,7 @@
                             <div class="col-sm-8">
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <input type="text" class="form-control" name="endreco" id="endereco" placeholder="endereco">
+                                        <input type="text" class="form-control" name="endereco" id="endereco" placeholder="endereco">
                                     </div>
                                 </div>
                             </div>

@@ -36,16 +36,20 @@ class UsuarioModel extends Database
 
     try {
 
-      $query = "SELECT * FROM `usuario` WHERE email=:email and senha = :senha";
+      $query = "SELECT u.idUsuario, u.nome, u.dataNas, p.perfil 
+                  FROM usuario AS u 
+                  INNER JOIN perfil AS p ON 
+                  (p.usuario_idUsuario = u.idUsuario) 
+                WHERE email = :email AND senha = :senha";
       $stmt = self::conn()->prepare($query);
-
-      $stmt->bindValue(':email',$this->__get('email'));
+  
+      $stmt->bindValue(':email', $this->__get('email'));
       $stmt->bindValue(':senha', md5($this->__get('password')));
       
       $stmt->execute();
 
       $user = $stmt->fetch(\PDO::FETCH_ASSOC);
-      return ($user);
+      return $user;
 
      
     } catch (\PDOException $e) {

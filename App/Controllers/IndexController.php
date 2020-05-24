@@ -27,11 +27,6 @@ class IndexController extends Action
     $this->render('sobre', 'index');
   }
 
-  public function cursos()
-  {
-    $this->render('cursos', 'index');
-  }
-
   public function registrar()
   {
     $this->render('registrar', 'index');

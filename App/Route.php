@@ -44,11 +44,7 @@ class Route extends Bootstrap
       'action' => 'sobre'
     );
 
-    $routes['/cursos'] = array(
-      'route' => '/cursos',
-      'controller' => 'indexController',
-      'action' => 'cursos'
-    );
+   
 
     // fim rotas da index
 
@@ -67,10 +63,20 @@ class Route extends Bootstrap
       'action' => 'exit'
     );
 
+    $routes['/salva'] = array(
+      'route' => '/salvar',
+      'controller' => 'AuthController',
+      'action' => 'salvarCadastro'
+    );
+
     // Fim rotas validacao ****
 
     // Rotas da aplicacao ****
-
+    $routes['/cursos'] = array(
+      'route' => '/cursos',
+      'controller' => 'AppController',
+      'action' => 'cursos'
+    );
     $routes['/main'] = array(
       'route' => '/main',
       'controller' => 'AppController',

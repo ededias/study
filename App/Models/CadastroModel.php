@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Database\Database;
 //use App\Src\Users;
-
+// use \PDOException;
 class CadastroModel extends Database
 
 {
@@ -25,6 +25,25 @@ class CadastroModel extends Database
     private $rg;
     private $sexo;
     private $idUsuario;
+    private $img;
+    private $perfil;
+
+    function setPerfil($perfil)
+    {
+        $this->perfil = $perfil;
+    }
+    function getPerfil()
+    {
+        return $this->perfil;
+    }
+    function setImg($img)
+    {
+        $this->img = $img;
+    }
+    function getImg()
+    {
+        return $this->img;
+    }
 
     //COMENTARIO
     function getnome()
@@ -158,53 +177,81 @@ class CadastroModel extends Database
         $this->idUsuario = $idUsuario;
     }
 
-    
 
+    function salvarEnderecoEPerfil()
+    {
+        $query = "";
+        $stmt = self::conn()->prepare($query);
+        // $stmt->bindValue(:idUsuario,);
+        print_r($this->salvarCadastro());
+        // $stmt->execute();
+
+        // 
+    }
 
     function salvarCadastro()
     {
-
-        $query = "insert into produto(nome, dataNas, bairro, endereco, CEP, numEnd, complemento,bairro, cidade, estado, telefone, email, senha, cpf, rg) values(:nome, :dataNas, :sexo, :CEP, :endereco, :numEnd, :complemento,:bairro, :ciade, :estado, :telefone, :email, :senha, :cpf, :rg)";
+        $query = "INSERT INTO usuario (nome, dataNas, sexo, telefone, email, senha, cpf, rg) 
+                    VALUES (:nome, :dataNas, :sexo, :telefone, :email, :senha, :cpf, :rg);
+                INSERT INTO endereco (rua, numero, cep, cidade, estado, bairro, complemento, usuario_idUsuario) 
+                    VALUES (:rua, :numero, :cep, :cidade, :estado, :bairro, :complemento, LAST_INSERT_ID());
+                INSERT INTO perfil(perfil, usuario_idUsuario) VALUES (:perfil, LAST_INSERT_ID());";
 
         $stmt = self::conn()->prepare($query);
-
+        //  usuario
         $stmt->bindValue(":nome", $this->getnome());
         $stmt->bindValue(":dataNas", $this->getdataNas());
         $stmt->bindValue(":sexo", $this->getsexo());
-        $stmt->bindValue(":CEP", $this->getCEP());
-        $stmt->bindValue(":endereco", $this->getendereco());
-        $stmt->bindValue(":numEnd", $this->getnumEnd());
-        $stmt->bindValue(":complemento", $this->getcomplemento());
-        $stmt->bindValue(":bairro", $this->getbairro());
-        $stmt->bindValue(":cidade", $this->getcidade());
-        $stmt->bindValue(":estado", $this->getestado());
         $stmt->bindValue(":telefone", $this->gettelefone());
         $stmt->bindValue(":email", $this->getemail());
-        $stmt->bindValue(":senha", $this->getsenha());
+        $stmt->bindValue(":senha", md5($this->getsenha()));
         $stmt->bindValue(":cpf", $this->getcpf());
         $stmt->bindValue(":rg", $this->getrg());
-        
+        // endereco
+        $stmt->bindValue(":rua", $this->getendereco());
+        $stmt->bindValue(":numero", $this->getnumEnd());
+        $stmt->bindValue(":cep", $this->getCEP());
+        $stmt->bindValue(":cidade", $this->getcidade());
+        $stmt->bindValue(":estado", $this->getestado());
+        $stmt->bindValue(":bairro", $this->getbairro());
+        $stmt->bindValue(":complemento", $this->getcomplemento());
+        // perfil
+        $stmt->bindValue(":perfil", $this->getPerfil());
 
-        $stmt->execute();
+        try {
+           
+            $stmt->execute();
+        } catch (\PDOException $e) {
+
+            return "ERROR" . $e->getMessage();
+        }
     }
 
 
     function listarCasdastro()
     {
-        $query = "SELECT idUsuario, nome, sexo, dataNas, endereco, CEP, numEndereco, complemento, bairro, cidade, estado,  telefonel, email, senha, cpf, rg, perfil, idPerfil, descricao FROM usuario";
+        $query = "SELECT * FROM usuario AS u 
+                    INNER JOIN perfil AS p ON 
+                        (u.idUsuario = p.usuario_idUsuario)
+                    inner join preco as pc
+                    inner join materias as m
+                WHERE p.perfil = :perfil AND m.idmaterias = pc.materias_idmaterias;";
 
         $stmt = self::conn()->prepare($query);
-
-
+        $stmt->bindValue(':perfil', $this->getPerfil());
         $stmt->execute();
-        $cadastrando = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-        return $cadastrando;
-
+        $lista = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        return $lista;
     }
 
     function listar1()
     {
-        $query = "SELECT idUsuario, nome, sexo, dataNas, endereco, CEP, numEndereco, complemento, bairro, cidade, estado, telefonel, email, senha, cpf, rg, perfil, idPerfil, descricao FROM usuario WHERE idUsuario=:idUsuario" ;
+        $query = "SELECT idUsuario, nome, sexo, dataNas, endereco, CEP, 
+                    numEndereco, complemento, bairro, cidade, 
+                    estado, telefonel, email, senha, cpf, rg,
+                    perfil, idPerfil, descricao FROM 
+                    usuario 
+                  WHERE idUsuario = :idUsuario";
 
         $stmt = self::conn()->prepare($query);
 
@@ -212,8 +259,5 @@ class CadastroModel extends Database
         $stmt->execute();
         $listando = $stmt->fetch(\PDO::FETCH_ASSOC);
         return $listando;
-
-
     }
 }
-?>

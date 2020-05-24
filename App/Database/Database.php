@@ -21,9 +21,11 @@ abstract class Database
 		try {
 			// inicia a instancia junto da classe PDO
 			self::$instance = new \PDO("mysql:host={$jsonStr['mysql']};dbname={$jsonStr['dbName']};charset=utf8",$jsonStr['username'], $jsonStr['password']);
+			return self::$instance;
 		} catch (\PDOException $e) {
+			
 			echo ($e->getMessage());
 		}
-		return self::$instance;
+		
 	}
 }
