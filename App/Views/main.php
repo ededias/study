@@ -25,6 +25,7 @@
   <link rel="stylesheet" type="text/css" href="css/slicknav.css">
   <link rel="stylesheet" type="text/css" href="css/style.css">
   <link rel="stylesheet" type="text/css" href="css/meuCss.css">
+  <link rel="stylesheet" href="css/chat.css">
   <!-- <link rel="stylesheet" href="css/responsive.css"> -->
 </head>
 
@@ -218,9 +219,10 @@
   <script src="js/jquery.form.js"></script>
   <script src="js/jquery.validate.min.js"></script>
   <script src="js/mail-script.js"></script>
-
+  <script src="js/ajax-pagamento.js"></script>
   <script src="js/main.js"></script>
-
+  <script src="js/chat/chatUpdate.js"></script>
+  <script src="js/chat/chatsend.js"></script>
 
 
  

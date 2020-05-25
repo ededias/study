@@ -53,7 +53,9 @@ p {
     line-height: 150%;
     text-align: center;
 }
-
+.chat p {
+    text-align: left;
+} 
 a {
     color: #04D2C8;
 }

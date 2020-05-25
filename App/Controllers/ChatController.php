@@ -84,7 +84,9 @@ class ChatController extends Action
     ];
     // renderiza as pessoas com quem o aluno/professor tem uma 
     // conexao prévia ou no canto para poderem iniciar uma conversa
+    
     ($this->view->renderPersons = (new ChatModels())->getUsers($userInf));
+  
     // renderiza a view como foi explicado a cima
     $this->render('chatpersons', '');
   }

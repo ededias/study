@@ -25,7 +25,7 @@ $(document).ready(() => {
         var data = $(this).serialize();
         return $.ajax({
             type: "GET",
-            url: 'bludv/Public/chatPersons',
+            url: '/chatPersons',
             dataType: data,
             success: function ajax(res) {
                 $("#chatPersons").html(`${res}`);
@@ -34,7 +34,7 @@ $(document).ready(() => {
     }
 
     function scroll() {
-        return $(".chat").stop().animate({ scrollTop: $(".chat")[0].scrollHeight }, 1000);
+        return $("#chat").stop().animate({ scrollTop: $(".chat")[0].scrollHeight }, 1000);
     }
 
     $('#buttonMsg').click(function() {
@@ -46,16 +46,16 @@ $(document).ready(() => {
             }, 1000);
         }
     });
-
+    // scroll();
     ajax();
-    // ajaxP();
+    ajaxP();
     const a = setInterval(() => {
         scroll();
         divValue();
         clearInterval(a)
     }, 2000);
     setInterval(() => {
-        // ajaxP();
+        ajaxP();
         ajax();
     }, 2000);
 

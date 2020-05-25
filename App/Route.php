@@ -72,10 +72,25 @@ class Route extends Bootstrap
     // Fim rotas validacao ****
 
     // Rotas da aplicacao ****
+    $routes['/comprar'] = array(
+      'route' => '/comprar',
+      'controller' => 'AppController',
+      'action' => 'mercadoPago'
+    );
+    $routes['/confirmarPagamento'] = array(
+      'route' => '/confirmarPagamento',
+      'controller' => 'AppController',
+      'action' => 'confirmarPagamento'
+    );
     $routes['/cursos'] = array(
       'route' => '/cursos',
       'controller' => 'AppController',
       'action' => 'cursos'
+    );
+    $routes['/aulas'] = array(
+      'route' => '/aulas',
+      'controller' => 'AppController',
+      'action' => 'pagamento'
     );
     $routes['/main'] = array(
       'route' => '/main',

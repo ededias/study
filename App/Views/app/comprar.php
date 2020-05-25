@@ -14,35 +14,12 @@
         <div class="row">
             <div class="col-xl-7 col-lg-7">
                 <div class="single_courses">
-                    <h3>Para comprar o pacote de aulas com <?php echo $this->view->pagamento['descricao']; ?> clique em comprar</h3>
-                    <form action="/comprar" id="pagamento" method="POST">
-                        <div class="main">
-
-                            <div class="radioholder">
-                                <input type="radio" name="pacote" value="80" checked>
-                                <label for="pt_website">Pacote 2H, R$ 80</label>
-                            </div>
-                            <div class="radioholder">
-                                <input type="radio" name="pacote" value="40">
-                                <label for="pt_mobile">Pacote 1H, R$ 40</label>
-                            </div>
-                            <div class="radioholder">
-                                <input type="radio" name="pacote" value="150">
-                                <label for="pt_application">Pacote 5H, R$ 150</label>
-                            </div>
-                            <div class="radioholder">
-                                <input type="radio" name="pacote" value="110">
-                                <label for="pt_illustration">Pacote 3H, R$ 110</label>
-                            </div>
-                            <?php //echo //print_r($this->view->perfil); 
-                            ?>
-                            <p>Após você escolher o pacote e finalizar o pagamento será liberado o chat com o professor para juntos decidirem onde serão as aulas. Bons estudos!</p>
-                        </div>
-                        <input type="hidden" name="aula" value="<?php echo $this->view->pagamento['materia']?>">
-                        <input type="hidden" name="professor" value="<?php echo $_GET['professor'] ?>">
-                        <button type="submit" class="btn_boxed">Adicionar a compra</button>
-
-
+                    <h3>Para finalizar sua compra clique em comprar</h3>
+                    <form action="/confirmarPagamento" method="POST">
+                        <input type="hidden" name="aluno" value="<?php echo $this->view->comprar['usuario'] ?>">
+                        <input type="hidden" name="professor" value="<?php echo $this->view->comprar['professor'] ?>">
+                        <script src="https://www.mercadopago.com.br/integrations/v1/web-payment-checkout.js" data-preference-id="<?php echo $this->view->comprar['api'] ?>" data-button-label="Comprar">
+                        </script>
                     </form>
                 </div>
             </div>
@@ -89,4 +66,5 @@
         </div>
     </div>
 </div>
-<?php print_r($this->view->pagamento); ?>
+
+<?php print_r($this->view->comprar)?>

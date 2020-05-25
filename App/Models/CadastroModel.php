@@ -177,6 +177,8 @@ class CadastroModel extends Database
         $this->idUsuario = $idUsuario;
     }
 
+   
+
     function salvarCadastro()
     {
         $query = "INSERT INTO usuario (nome, dataNas, sexo, telefone, email, senha, cpf, rg) 
@@ -234,9 +236,13 @@ class CadastroModel extends Database
 
     function listar1()
     {
-        $query = "SELECT idUsuario, nome, dataNas, telefone, email, senha, cpf,
-                     rg, descricao, sexo, img, usuariocol
-                  FROM usuario WHERE idUsuario = :idUsuario";
+        $query = "SELECT u.idUsuario, u.nome, u.dataNas, 
+                      u.descricao, u.sexo, u.img
+                      , pc.valor, m.materia
+                    FROM usuario AS u
+                    INNER JOIN preco as pc
+                    INNER JOIN materias as m
+                   WHERE idUsuario = :idUsuario AND m.idmaterias = pc.materias_idmaterias";
 
         $stmt = self::conn()->prepare($query);
 
@@ -244,5 +250,72 @@ class CadastroModel extends Database
         $stmt->execute();
         $listando = $stmt->fetch(\PDO::FETCH_ASSOC);
         return $listando;
+    }
+
+
+    function setIdAluno($idAluno) {
+        $this->idAluno = $idAluno;
+    }
+    function getIdAluno(){
+        return $this->idAluno;
+    }
+    function setIdProfessor($idProfessor) {
+        $this->idProfessor = $idProfessor;
+    }
+    function getIdProfessor() {
+        return $this->idProfessor;
+    }
+
+    function setPagamentoStatus($statusPagamento) {
+        $this->statusPagamento = $statusPagamento;
+    }
+    
+    function getPagamentoStatus(){
+        return $this->statusPagamento;
+    }
+    function setPagamentoId($idPagamento) {
+        $this->idPagamento = $idPagamento;
+    }
+    function getPagamentoId() {
+        return $this->idPagamento;
+    }
+
+    function setValor($valor) {
+        $this->valor = $valor;
+    }
+    function getValor(){
+        return $this->valor;
+    }
+    function setPagamentoOrdem($pagamentoOrdem) {
+        $this->pagamentoOrdem = $pagamentoOrdem;
+    }
+    function getPagamentoOrdem() {
+        return $this->pagamentoOrdem;
+    }
+
+    function salvarPagamento() {
+
+        $query = "INSERT INTO compra(valor, idPagamento, statusPagamento, ordemPagamento, Usuario_idUsuario, pagador, recebedor) 
+                    VALUES(:valor, :idPagamento, :statusPagamento, :ordemPagamento, :pagador, :pagador, :recebedor);
+                  INSERT INTO relacaousuario(idAluno, idProfessor, Usuario_idUsuario) VALUES (:pagador, :recebedor, :pagador)";
+
+        $stmt = self::conn()->prepare($query);
+
+
+        $stmt->bindValue(':valor', $this->getValor());
+        $stmt->bindValue(':idPagamento', $this->getPagamentoId());
+        $stmt->bindValue(':statusPagamento', $this->getPagamentoStatus());
+        $stmt->bindValue(':ordemPagamento', $this->getPagamentoOrdem());
+
+        $stmt->bindValue(':pagador', $this->getIdAluno());
+        $stmt->bindValue(':recebedor', $this->getIdProfessor());
+
+        // $stmt->execute();
+
+        try {
+            $stmt->execute();
+        } catch (\PDOException $e) {
+            echo $e->getMessage();
+        }  
     }
 }
