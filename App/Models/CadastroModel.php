@@ -177,18 +177,6 @@ class CadastroModel extends Database
         $this->idUsuario = $idUsuario;
     }
 
-
-    function salvarEnderecoEPerfil()
-    {
-        $query = "";
-        $stmt = self::conn()->prepare($query);
-        // $stmt->bindValue(:idUsuario,);
-        print_r($this->salvarCadastro());
-        // $stmt->execute();
-
-        // 
-    }
-
     function salvarCadastro()
     {
         $query = "INSERT INTO usuario (nome, dataNas, sexo, telefone, email, senha, cpf, rg) 
@@ -246,12 +234,9 @@ class CadastroModel extends Database
 
     function listar1()
     {
-        $query = "SELECT idUsuario, nome, sexo, dataNas, endereco, CEP, 
-                    numEndereco, complemento, bairro, cidade, 
-                    estado, telefonel, email, senha, cpf, rg,
-                    perfil, idPerfil, descricao FROM 
-                    usuario 
-                  WHERE idUsuario = :idUsuario";
+        $query = "SELECT idUsuario, nome, dataNas, telefone, email, senha, cpf,
+                     rg, descricao, sexo, img, usuariocol
+                  FROM usuario WHERE idUsuario = :idUsuario";
 
         $stmt = self::conn()->prepare($query);
 

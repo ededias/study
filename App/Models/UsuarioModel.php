@@ -7,53 +7,51 @@ use App\Src\Users;
 
 class UsuarioModel extends Database
 {
-  private $name = '';
-  private $CPF = '';
-  private $RG = '';
-  private $age = 0;
-  private $description = '';
-  private $street = '';
-  private $photo = '';
-  private $password = '';
-  private $email = '';
+    private $name = '';
+    private $CPF = '';
+    private $RG = '';
+    private $age = 0;
+    private $description = '';
+    private $street = '';
+    private $photo = '';
+    private $password = '';
+    private $email = '';
 
-  // private $chatMensagem;
+    // private $chatMensagem;
 
-  public function __get($attribute)
-  {
+    public function __get($attribute)
+    {
 
-    return $this->$attribute;
-    
-  }
+        return $this->$attribute;
+    }
 
-  public function __set($attribute, $value)
-  {
-    $this->$attribute = $value;
-  }
+    public function __set($attribute, $value)
+    {
+        $this->$attribute = $value;
+    }
 
-  function validar()
-  {
+    function validar()
+    {
 
-    try {
+        try {
 
-      $query = "SELECT u.idUsuario, u.nome, u.dataNas, p.perfil 
+            $query = "SELECT u.idUsuario, u.nome, u.dataNas, u.email, u.cpf, u.rg, 
+                       u.telefone, u.img, u.sexo, u.descricao, p.perfil 
                   FROM usuario AS u 
                   INNER JOIN perfil AS p ON 
                   (p.usuario_idUsuario = u.idUsuario) 
                 WHERE email = :email AND senha = :senha";
-      $stmt = self::conn()->prepare($query);
-  
-      $stmt->bindValue(':email', $this->__get('email'));
-      $stmt->bindValue(':senha', md5($this->__get('password')));
-      
-      $stmt->execute();
+            $stmt = self::conn()->prepare($query);
 
-      $user = $stmt->fetch(\PDO::FETCH_ASSOC);
-      return $user;
+            $stmt->bindValue(':email', $this->__get('email'));
+            $stmt->bindValue(':senha', md5($this->__get('password')));
 
-     
-    } catch (\PDOException $e) {
-      echo $e->getMessage();
+            $stmt->execute();
+
+            $user = $stmt->fetch(\PDO::FETCH_ASSOC);
+            return $user;
+        } catch (\PDOException $e) {
+            echo $e->getMessage();
+        }
     }
-  }
 }

@@ -18,47 +18,55 @@
             <div class="col-xl-7 col-lg-7">
                 <div class="single_courses">
                     <h3>Sobre minhas aulas</h3>
-                    <p>Our set he for firmament morning sixth subdue darkness creeping gathered divide our let god moving. Moving in fourth air night bring upon you’re it beast let you dominion likeness open place day great wherein heaven sixth lesser subdue fowl male signs his day face waters itself and make be to our itself living. Fish in thing lights moveth. Over god spirit morning, greater had man years green multiply creature, form them in, likeness him behold two cattle for divided. Fourth darkness had. Living light there place moved divide under earth. Light face, fly dry us </p>
-                    <h3 class="second_title">Escolha um pacote de horas</h3>
-                </div>
-                <form action="/mercadoPago" method="POST">
-                    <div class="main">
-
-                        <div class="radioholder">
-                            <input type="radio" name="pacote" value="80" checked>
-                            <label for="pt_website">Pacote 2H, R$ 80</label>
+                    <form action="/descricao">
+                        <div class="form-group">
+                        <textarea class="form-control" name="descricao" id="descricao" cols="30" rows="4"><?php echo $_SESSION['descricao'] ?></textarea>
                         </div>
-                        <div class="radioholder">
-                            <input type="radio" name="pacote" value="40">
-                            <label for="pt_mobile">Pacote 1H, R$ 40</label>
-                        </div>
-                        <div class="radioholder">
-                            <input type="radio" name="pacote" value="150">
-                            <label for="pt_application">Pacote 5H, R$ 150</label>
-                        </div>
-                        <div class="radioholder">
-                            <input type="radio" name="pacote" value="110">
-                            <label for="pt_illustration">Pacote 3H, R$ 110</label>
-                        </div>
-                        <?php //echo //print_r($this->view->perfil); 
-                        ?>
-                        <p>Após você escolher o pacote e finalizar o pagamento será liberado o chat com o professor para juntos decidirem onde serão as aulas. Bons estudos!</p>
-                    </div>
-
-                    <form action="/processar_pagamento" method="POST">
-                        <script src="https://www.mercadopago.com.br/integrations/v1/web-payment-checkout.js" data-preference-id="<?php echo $this->view->perfil['api']; ?>">
-                        </script>
+                        
+                        <button class="boxed_btn" type="submit">Salvar</button>
                     </form>
+                    <p> </p>
 
-                    <button type="submit" class="boxed_btn">Comprar</button>
-                </form>
+                </div>
+
+                <?php if ($_SESSION['perfil'] == 'professor') : ?>
+                    <div class="single_courses">
+                        <h3 class="second_title">Escolha um pacote de horas</h3>
+                    </div>
+                    <form action="/mercadoPago" method="POST">
+                        <div class="main">
+
+                            <div class="radioholder">
+                                <input type="radio" name="pacote" value="80" checked>
+                                <label for="pt_website">Pacote 2H, R$ 80</label>
+                            </div>
+                            <div class="radioholder">
+                                <input type="radio" name="pacote" value="40">
+                                <label for="pt_mobile">Pacote 1H, R$ 40</label>
+                            </div>
+                            <div class="radioholder">
+                                <input type="radio" name="pacote" value="150">
+                                <label for="pt_application">Pacote 5H, R$ 150</label>
+                            </div>
+                            <div class="radioholder">
+                                <input type="radio" name="pacote" value="110">
+                                <label for="pt_illustration">Pacote 3H, R$ 110</label>
+                            </div>
+                            <?php //echo //print_r($this->view->perfil); 
+                            ?>
+                            <p>Após você escolher o pacote e finalizar o pagamento será liberado o chat com o professor para juntos decidirem onde serão as aulas. Bons estudos!</p>
+                        </div>
+
+                        <button type="submit" class="boxed_btn">Comprar</button>
+                    </form>
+                <?php endif; ?>
             </div>
 
 
             <div class="col-xl-5 col-lg-5">
                 <div class="courses_sidebar">
                     <div class="video_thumb">
-                        <img src="img/latest_blog/video.png" alt="">
+                        <img src="<?php echo $_SESSION['img'] ?>" alt="">
 
                         </a>
                     </div>
@@ -66,56 +74,41 @@
                         <div class="auhor_header">
 
                             <div class="name">
-                                <h3>Joana da Silva</h3>
+                                <form enctype="multipart/form-data" action="/atualizar">
+                                    <div class="form-group" >
+                                        <label for="nome">Nome</label>
+                                        <h3><input type="text" class="form-control" id="nome" name="nome" value="<?php echo $_SESSION['nome'] ?>"></h3>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">Email</label>
+                                        <h3><input type="email" class="form-control" id="email" name="email" value="<?php echo $_SESSION['email'] ?>" disabled></h3>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="CPF">CPF</label>
+                                        <h3><input type="text" class="form-control" id="cpf" name="cpf" value="<?php echo $_SESSION['cpf'] ?>" disabled></h3>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="RG">RG</label>
+                                        <h3><input type="text" class="form-control" id="rg" name="rg" value="<?php echo $_SESSION['rg'] ?>" disabled></h3>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="sexo">Sexo</label>
+                                        <h3><input type="text" class="form-control" id="sexo" name="sexo" value="<?php echo $_SESSION['sexo'] ?>"></h3>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="telefone">Telefone</label>
+                                        <h3><input type="text" class="form-control" id="telefone" name="telefone" value="<?php echo $_SESSION['telefone'] ?>"></h3>
+                                    </div>
+                                </form>
+                                
 
                             </div>
                         </div>
-                        <p class="text_info">
-                            <?php
-
-                            echo $this->view->perfil["descricao"];
-
-                            ?>
-                        </p>
-                        <ul>
-                            <li><a href="#"> <i class="fa fa-envelope"></i> </a></li>
-                            <li><a href="#"> <i class="fa fa-twitter"></i> </a></li>
-                            <li><a href="#"> <i class="ti-linkedin"></i> </a></li>
-                            <li><a href="#"><i class="ti-facebook"></i>
-                            <li><a href="#"><i class="fa fa-instagram"></i>
-                                </a>
-                            </li>
-                        </ul>
-
-
-                        <!-- </div>
-                        
-                    <a href="#" class="boxed_btn">Buy Course</a>
-                    <div class="feedback_info">
-                        <h3>Write your feedback</h3>
-                        <p>Your rating</p>
-                        <i class="flaticon-mark-as-favorite-star"></i>
-                        <i class="flaticon-mark-as-favorite-star"></i>
-                        <i class="flaticon-mark-as-favorite-star"></i>
-                        <i class="flaticon-mark-as-favorite-star"></i>
-                        <i class="flaticon-mark-as-favorite-star"></i>
-
-                        <form action="#">
-                            <textarea name="" id="" cols="30" rows="10" placeholder="Write your feedback"></textarea>
-                            <button type="submit" class="boxed_btn">Submit</button>
-                        </form>
-                    </div> -->
+                    
                     </div>
 
-                    <a href="#" class="boxed_btn">Comprar</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<?php
-print_r($this->view->perfil);
-
-
-?>

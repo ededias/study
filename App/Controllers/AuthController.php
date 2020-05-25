@@ -27,15 +27,15 @@ class AuthController extends UsuarioModel
 		
 		$this->__set('email', $_POST['email']);
 		$this->__set('password', $_POST['password']);
-		// print_r($_POST);
+		
 		$result = $this->validar();
 		
-		print_r($result);
 		if (empty($result)) {
 			header('location: /?erro=0');
 		} else {
 			session_start();
 			$_SESSION = $result;
+			print_r($_SESSION);
 			header('location: /main');
 		}
 	}
@@ -77,7 +77,7 @@ class AuthController extends UsuarioModel
 
 		session_start();
 		$_SESSION;
-		print_r($_SESSION);
+
 		if (empty($_SESSION) && isset($_SESSION)) {
 			header('location: /?autenticar=erro');
 		}
