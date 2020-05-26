@@ -32,20 +32,19 @@
                  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                      <div class="row">
                          <?php $result = $this->view->cursos;
-                            print_r($this->view->cursos);
                             foreach ($result as $chave => $valor) :
                             
                             ?>
                              <div class="col-xl-4 col-lg-4 col-md-6">
                                  <div class="single_courses">
                                      <div class="thumb">
-                                         <a href="#">
+                                         <a href="/pagamento?professor=<?php echo $valor['idUsuario'] ?>">
                                              <img src="<?php echo $valor['img'] ?>" alt="">
                                          </a>
                                      </div>
                                      <div class="courses_info">
                                          <span>Photoshop</span>
-                                         <h3><a href="#">Aprende de uma vez por todas! <strong>Confira</strong></a></h3>
+                                         <h3><a href="/pagamento?professor=<?php echo $valor['idUsuario'] ?>">Aprende de uma vez por todas! <strong>Confira</strong></a></h3>
                                          <div class="star_prise d-flex justify-content-between">
                                              <div class="prise">
                                                  <span class="active_prise">

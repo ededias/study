@@ -18,40 +18,56 @@
             <div class="col-xl-7 col-lg-7">
                 <div class="single_courses">
 
-                    <form action="/atualizar">
+                    <form method="post" action="/atualizar">
                         <label for="descricaoaula">
                             <h3>Sobre minhas aulas</h3>
                         </label>
                         <div class="form-group">
-                            <textarea class="form-control" name="descricaoaula" id="descricaoaula" cols="30" rows="4"><?php echo $_SESSION['descricao'] ?></textarea>
+                            <textarea class="form-control" name="descricaoaula" id="descricaoaula" cols="30" rows="4"><?php if (!isset($this->view->perfil['descricaoPerfil'])) $valor = '';
+                                                                                                                        else $valor = $this->view->perfil['descricaoPerfil'];
+                                                                                                                        echo $valor ?></textarea>
                         </div>
                         <label for="descricaoperfil">
                             <h3>Descrição do Perfil</h3>
                         </label>
                         <div class="form-group">
-                            <textarea class="form-control" name="descricaoperfil" id="descricaoperfil" cols="30" rows="5"></textarea>
+                            <textarea class="form-control" name="descricaoperfil" id="descricaoperfil" cols="30" rows="5"><?php if (!isset($this->view->perfil['descricaoAula'])) $valor = '';
+                                                                                                                            else $valor = $this->view->perfil['descricaoAula'];
+                                                                                                                            echo $valor ?></textarea>
                         </div>
-                        <label for="valoraula">
-                            <h3>Insira o valor hora de sua aula</h3>
-                        </label>
-                        <div class="form-group">
-                            <input class="form-control" name="valoraula" id="valoraula" type="text" placeholder="ex: R$50,00" value="<?php
-                            echo "R$ {$this->view->perfil["valor"]},00" ?>">
-                        </div>
-                        <div class="form-group">
-                        <h3>Selecione a matéria</h3>
-                        <select class="form-control">
-                            <option value="2">Portugues</option>
-                            <option value="3">Matemática</option>
-                            <option value="4">História</option>
-                            <option value="5">Geografia</option>
-                            <option value="6">Fisíca</option>
-                            <option value="7">Biologia</option>
-                            <option value="8">Química</option>
-                            <option value="9">Sociologia</option>
-                            <option value="10">Fisolofia</option>
-                        </select>
-                        </div>                  
+
+                        <?php if ($_SESSION['perfil'] != 'aluno') : ?>
+                            <label for="valoraula">
+                                <h3>Insira o valor hora de sua aula</h3>
+                            </label>
+                            <div class="form-group">
+                                <input class="form-control" name="valoraula" id="valoraula" type="text" placeholder="ex: R$50,00" value="<?php if (!isset($this->view->perfil['valor'])) $valor = 0;
+                                                                                                                                            else $valor = $this->view->perfil['valor'];
+                                                                                                                                            echo "R$ {$valor},00" ?>">
+                            </div>
+                            <div class="form-group">
+                                <label for="aulas">
+                                    <h3>Selecione a matéria</h3>
+                                </label>
+                                <select id="aulas" name="aula" class="form-control">
+                                    <option value="2">Portugues</option>
+                                    <option value="3">Matemática</option>
+                                    <option value="4">História</option>
+                                    <option value="5">Geografia</option>
+                                    <option value="6">Fisíca</option>
+                                    <option value="7">Biologia</option>
+                                    <option value="8">Química</option>
+                                    <option value="9">Sociologia</option>
+                                    <option value="10">Fisolofia</option>
+                                </select>
+                            </div>
+                        <?php endif; ?>
+                        <input type="hidden" name="idPreco" value="<?php if (!isset($this->view->perfil['idPreco'])) $valor = '';
+                                                                    else $valor = $this->view->perfil['idPreco'];
+                                                                    echo $valor; ?>">
+                        <input type="hidden" name="idDescricao" value="<?php if (!isset($this->view->perfil['idDescricao'])) $valor = '';
+                                                                        else $valor = $this->view->perfil['idDescricao'];
+                                                                        echo $valor; ?>">
                         <button class="boxed_btn" type="submit">Salvar</button>
                     </form>
                     <p> </p>
@@ -107,4 +123,3 @@
         </div>
     </div>
 </div>
-<?php print_r($this->view->perfil) ?>

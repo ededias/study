@@ -15,7 +15,7 @@
             <div class="col-xl-7 col-lg-7">
                 <div class="single_courses">
                     <h3>Sobre minhas aulas</h3>
-                    <p> <?php echo $this->view->pagamento['descricaoaula']; ?>
+                    <p> <?php echo $this->view->pagamento['descricaoAula']; ?>
                         
                     </p>
                     <form action="/comprar" id="pagamento" method="POST">
@@ -45,13 +45,12 @@
                                 <label for="pt_illustration">Pacote 3H, R$ <?php 
                                 echo $this->view->pagamento["valor"] * 3; ?></label>
                             </div>
-                            <?php //echo //print_r($this->view->perfil); 
-                            ?>
+                            
                             <p>Após você escolher o pacote e finalizar o pagamento será liberado o chat com o professor para juntos decidirem onde serão as aulas. Bons estudos!</p>
                         </div>
                         <input type="hidden" name="aula" value="<?php echo $this->view->pagamento['materia']?>">
                         <input type="hidden" name="professor" value="<?php echo $_GET['professor'] ?>">
-                        <button type="submit" class="btn_boxed">Adicionar a compra</button>
+                        <button type="submit" class="boxed_btn">Adicionar a compra</button>
 
 
                     </form>
@@ -75,7 +74,7 @@
                             </div>
                         </div>
                         <p class="text_info">
-                        <?php echo $this->view->pagamento['descricaoperfil']; ?>
+                        <?php echo $this->view->pagamento['descricaoPerfil']; ?>
                         </p>                   
                     </div>
                 </div>

@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-xl-6">
                 <div class="course_text">
-                    <h3>Joana da Silva</h3>
+                    <h3><?php echo $this->view->comprar['professor']['nome'] ?></h3>
                 </div>
             </div>
         </div>
@@ -17,7 +17,7 @@
                     <h3>Para finalizar sua compra clique em comprar</h3>
                     <form action="/confirmarPagamento" method="POST">
                         <input type="hidden" name="aluno" value="<?php echo $this->view->comprar['usuario'] ?>">
-                        <input type="hidden" name="professor" value="<?php echo $this->view->comprar['professor'] ?>">
+                        <input type="hidden" name="professor" value="<?php echo $this->view->comprar['professor']['idUsuario'] ?>">
                         <script src="https://www.mercadopago.com.br/integrations/v1/web-payment-checkout.js" data-preference-id="<?php echo $this->view->comprar['api'] ?>" data-button-label="Comprar">
                         </script>
                     </form>
@@ -36,14 +36,12 @@
                         <div class="auhor_header">
 
                             <div class="name">
-                                <h3>Joana da Silva</h3>
+                                <h3><?php echo $this->view->comprar['professor']['nome']; ?></h3>
 
                             </div>
                         </div>
                         <p class="text_info">
-                            Our set he for firmament morning sixth subdue darkness creeping gathered divide our let
-                            god moving. Moving in fourth air night bring upon you’re it beast let you dominion
-                            likeness open place day
+                            <?php echo $this->view->comprar['professor']['descricaoPerfil']; ?>
                         </p>
 
                         <ul>
@@ -67,4 +65,3 @@
     </div>
 </div>
 
-<?php print_r($this->view->comprar)?>

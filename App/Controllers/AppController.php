@@ -19,19 +19,14 @@ class AppController extends Action
 		$infPessoais = new CadastroModel();
 
 		(new AuthController())->validate();
+		$userInf = [
+			'idUsuario' => $_SESSION['idUsuario'],
+			'perfil' => $_SESSION['perfil']
+		];
+		$result = $infPessoais->listarPerfil($userInf);
 
-		if ($_SESSION['perfil'] == 'aluno') {
-			$infPessoais->setPerfil('professor');
-			$result = $infPessoais->listarCasdastro();
-
-			$this->view->main = $result;
-			$this->render('cursos', 'main');
-		} else {
-
-			$this->view->main = json_encode($infPessoais);
-			$infPessoais->setPerfil('aluno');
-			$this->render('main', 'main');
-		}
+		$this->view->main = $result;
+		$this->render('main', 'main');
 	}
 
 	public function cursos()
@@ -43,7 +38,6 @@ class AppController extends Action
 		if ($_SESSION['perfil'] == 'aluno') {
 			$infPessoais->setPerfil('professor');
 			$result = $infPessoais->listarCasdastro();
-
 			$this->view->cursos = $result;
 			$this->render('cursos', 'main');
 		} else {
@@ -56,6 +50,24 @@ class AppController extends Action
 		}
 	}
 
+	public function atualizar()
+	{
+		(new AuthController())->validate();
+
+		$atualizar = new CadastroModel();
+
+		$atualizar->setIdDescricao($_POST['idDescricao']);
+		$atualizar->setDescricaoAula($_POST['descricaoaula']);
+		$atualizar->setDescricaoPerfil($_POST['descricaoperfil']);
+		$atualizar->setValor($_POST['valoraula']);
+		$atualizar->setIdMaterias($_POST['aula']);
+		$atualizar->setidUsuario($_SESSION['idUsuario']);
+		$atualizar->setIdPreco($_POST['idPreco']);
+		$atualizar->atualizarCad($atualizar);
+
+		header('location: /perfil');
+	}
+
 	public function perfil()
 	{
 		(new AuthController())->validate();
@@ -63,25 +75,39 @@ class AppController extends Action
 		if ($_SESSION['perfil'] == 'aluno') {
 
 			$infPessoais->setidUsuario($_SESSION['idUsuario']);
-			$lista = $infPessoais->listar1($infPessoais);
-			$this->view->perfil = $lista;
-			$this->render('perfil', 'main');
+			$lista = $infPessoais->perfilUsuario($infPessoais);
+
+			if (!empty($lista)) {
+				$this->view->perfil = $lista;
+				$this->render('perfil', 'main');
+			} else {
+				$lista = $infPessoais->listar1();
+				$this->view->perfil = $lista;
+				$this->render('perfil', 'main');
+			}
 		} else {
-			
+
 			$infPessoais->setidUsuario($_SESSION['idUsuario']);
-			$this->view->perfil = $lista;
-			$this->render('perfil', 'main');
+			$lista = $infPessoais->perfilUsuario($infPessoais);
+			if (!empty($lista)) {
+				$this->view->perfil = $lista;
+				$this->render('perfil', 'main');
+			} else {
+				$lista = $infPessoais->listar1();
+				$this->view->perfil = $lista;
+				$this->render('perfil', 'main');
+			}
 		}
 	}
 
 	function pagamento()
 	{
-		
+
 		(new AuthController())->validate();
 		$professor = new CadastroModel;
 		$professor->setidUsuario($_GET['professor']);
 		$result = $professor->listar1($professor);
-		
+
 		$this->view->pagamento = $result;
 		$this->render('pagamento', 'main');
 	}
@@ -89,10 +115,12 @@ class AppController extends Action
 	function mercadoPago()
 	{
 		(new AuthController())->validate();
+		$professor = new CadastroModel();
 		SDK::setAccessToken("TEST-6434990738409266-042216-48fcbcf4f026f3daae6eaebda11128e4-327719278");
 		// Cria um objeto de preferência
 		$preference = new Preference();
-		
+		$professor->setidUsuario($_POST['professor']);
+		$result = $professor->listar1();
 		// Cria um item na preferência
 		$item = new Item();
 		$item->title = $_POST['aula'];
@@ -100,14 +128,15 @@ class AppController extends Action
 		$item->unit_price = $_POST['pacote'];
 		$preference->items = array($item);
 		$preference->save();
-		$this->view->comprar = ["usuario" => $_SESSION['idUsuario'], 'professor' => $_POST['professor'], "api"=>$preference->id];
+		$this->view->comprar = ["usuario" => $_SESSION['idUsuario'], 'professor' => $result, "api" => $preference->id];
 		$this->render('comprar', 'main');
 	}
 
-	function confirmarPagamento() {
+	function confirmarPagamento()
+	{
 		(new AuthController())->validate();
-		
-		if($_POST['payment_status'] == 'approved'){
+
+		if ($_POST['payment_status'] == 'approved') {
 			$pagamento = new CadastroModel();
 
 			$pagamento->setIdprofessor($_POST['professor']);
@@ -122,6 +151,5 @@ class AppController extends Action
 		} else {
 			header('location: /main?erro=true');
 		}
-
 	}
 }

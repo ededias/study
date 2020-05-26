@@ -43,6 +43,21 @@ body {
     max-width: 700px;
 }
 
+.map-container {
+    overflow: hidden;
+    padding-bottom: 56.25%;
+    position: relative;
+    height: 0;
+}
+
+.map-container iframe {
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+}
+
 h1 {
     text-align: center;
     margin: 0 0 1.2em 0;
@@ -54,9 +69,11 @@ p {
     line-height: 150%;
     text-align: center;
 }
+
 .chat p {
     text-align: left;
-} 
+}
+
 a {
     color: #04D2C8;
 }
@@ -145,30 +162,32 @@ a:hover {
     padding-left: 16%;
 }
 
-
 * {
     box-sizing: border-box;
-  }
- 
-  
-  .searchform {
+}
+
+.searchform {
     display: block;
     margin: 100;
     margin-bottom: 100px;
     overflow: hidden;
     width: 100%;
+}
 
-  }
-  label, input {
+label,
+input {
     vertical-align: baseline;
     color: #1F1F1F;
-  }
-  /* label {
+}
+
+
+/* label {
     margin: 0.125em 0.125em 0 0;
     float: right;
     
   } */
-  input[type="search"] {
+
+input[type="search"] {
     border: 2px solid #E87A31;
     border-width: 0 0 3px;
     background-color: transparent;
@@ -176,10 +195,10 @@ a:hover {
     padding: 0.125em 0.225em;
     width: 90%;
     float: left;
-    
-  }
-  input[type="search"]:focus {
+}
+
+input[type="search"]:focus {
     color: #1F1F1F;
     border-color: #04D2C8;
     outline: none;
-  }
+}

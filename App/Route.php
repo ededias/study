@@ -72,6 +72,11 @@ class Route extends Bootstrap
     // Fim rotas validacao ****
 
     // Rotas da aplicacao ****
+    $routes['/atualizar'] = array(
+      'route' => '/atualizar',
+      'controller' => 'AppController',
+      'action' => 'atualizar'
+    );
     $routes['/comprar'] = array(
       'route' => '/comprar',
       'controller' => 'AppController',
@@ -145,7 +150,11 @@ class Route extends Bootstrap
       'controller' => 'ChatController',
       'action' => 'chatPersons'
     );
-
+    $routes['getPersons'] = array(
+      'route' => '/getPersons',
+      'controller' => 'ChatController',
+      'action' => 'getPersons'
+    );
 
     // fim rotas chat 
     

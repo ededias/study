@@ -27,7 +27,12 @@ class CadastroModel extends Database
     private $idUsuario;
     private $img;
     private $perfil;
+    private $idDescricao;
+    private $descricaoAula;
+    private $descricaoPerfil;
+    private $idPreco;
 
+    
     function setPerfil($perfil)
     {
         $this->perfil = $perfil;
@@ -176,8 +181,103 @@ class CadastroModel extends Database
     {
         $this->idUsuario = $idUsuario;
     }
+    
+    function setIdDescricao($idDescricao)
+    {
+        $this->idDescricao = $idDescricao;
+    }
+    function getIdDescricao()
+    {
+        return $this->idDescricao;
+    }
 
-   
+    function setDescricaoAula($descricaoAula)
+    {
+        $this->descricaoAula = $descricaoAula;
+    }
+    function getDescricaoAula()
+    {
+        return $this->descricaoAula;
+    }
+    
+    function setDescricaoPerfil($descricaoPerfil)
+    {
+        $this->descricaoPerfil = $descricaoPerfil;
+    }
+    function getDescricaoPerfil()
+    {
+        return $this->descricaoPerfil;
+    }
+    
+    function setIdMaterias($idMaterias)
+    {
+        $this->idMaterias = $idMaterias;
+    }
+    function getIdMaterias()
+    {
+        return $this->idMaterias;
+    }
+
+    function setIdAluno($idAluno)
+    {
+        $this->idAluno = $idAluno;
+    }
+    function getIdAluno()
+    {
+        return $this->idAluno;
+    }
+    function setIdProfessor($idProfessor)
+    {
+        $this->idProfessor = $idProfessor;
+    }
+    function getIdProfessor()
+    {
+        return $this->idProfessor;
+    }
+
+    function setPagamentoStatus($statusPagamento)
+    {
+        $this->statusPagamento = $statusPagamento;
+    }
+
+    function getPagamentoStatus()
+    {
+        return $this->statusPagamento;
+    }
+    function setPagamentoId($idPagamento)
+    {
+        $this->idPagamento = $idPagamento;
+    }
+    function getPagamentoId()
+    {
+        return $this->idPagamento;
+    }
+
+    function setValor($valor)
+    {
+        $this->valor = $valor;
+    }
+    function getValor()
+    {
+        return $this->valor;
+    }
+    function setPagamentoOrdem($pagamentoOrdem)
+    {
+        $this->pagamentoOrdem = $pagamentoOrdem;
+    }
+    function getPagamentoOrdem()
+    {
+        return $this->pagamentoOrdem;
+    }
+    function setIdPreco($idPreco)
+    {
+        $this->idPreco = $idPreco;
+    }
+    function getIdPreco()
+    {
+        return $this->idPreco;
+    }
+
 
     function salvarCadastro()
     {
@@ -209,7 +309,7 @@ class CadastroModel extends Database
         $stmt->bindValue(":perfil", $this->getPerfil());
 
         try {
-           
+
             $stmt->execute();
         } catch (\PDOException $e) {
 
@@ -217,6 +317,42 @@ class CadastroModel extends Database
         }
     }
 
+    function bindValuesDescricao() {
+        $query = "SELECT * FROM descricao WHERE idDescricao = idDescricao";
+    }
+
+    
+    
+    function atualizarCad() {
+        $result = $this->getIdDescricao();
+        if($result = '') {
+            
+            $query = "UPDATE descricao SET descricaoAula = :descricaoAula, descricaoPerfil = :descricaoPerfil 
+                        WHERE idDescricao = :idDescricao AND usuario_idUsuario = :idUsuario;
+                      UPDATE preco SET valor = :valor, materias_idmaterias = :idMateria WHERE idPreco = :idPreco";
+            $stmt = self::conn()->prepare($query);
+            $stmt->bindValue(':idDescricao', $this->getidDescricao());
+            $stmt->bindValue(':idPreco', $this->getIdPreco());
+        } else {
+            
+            $query = "INSERT INTO descricao(descricaoAula, descricaoPerfil, usuario_idUsuario) VALUES 
+                        (:descricaoAula, :descricaoPerfil, :idUsuario);
+                      INSERT INTO preco(usuario_idUsuario, valor, materias_idMaterias) VALUES (:idUsuario, :valor, :idMateria)";
+            $stmt = self::conn()->prepare($query);
+        }
+        
+        $stmt = self::conn()->prepare($query);
+        $stmt->bindValue(':descricaoAula', $this->getDescricaoAula());
+        $stmt->bindValue(':descricaoPerfil', $this->getDescricaoPerfil());
+        
+        $stmt->bindValue(':valor', $this->getValor());
+
+        $stmt->bindValue(':idMateria', $this->getIdMaterias());
+        $stmt->bindValue(':idUsuario', $this->getIdUsuario());
+        
+
+        $stmt->execute();
+    }
 
     function listarCasdastro()
     {
@@ -234,15 +370,63 @@ class CadastroModel extends Database
         return $lista;
     }
 
-    function listar1()
+    function perfilUsuario()
     {
         $query = "SELECT u.idUsuario, u.nome, u.dataNas, 
-                      u.descricao, u.sexo, u.img
-                      , pc.valor, m.materia
+                         u.sexo, u.img, u.email, u.cpf, u.rg, u.sexo, u.telefone
+                        , pc.valor, pc.idPreco, m.materia, d.descricaoAula, d.descricaoPerfil, d.idDescricao
+            FROM usuario AS u
+                INNER JOIN descricao as d 
+                INNER JOIN preco as pc
+                INNER JOIN materias as m
+            WHERE idUsuario = :idUsuario AND m.idmaterias = pc.materias_idmaterias AND d.usuario_idUsuario = :idUsuario AND pc.usuario_idUsuario = :idUsuario";
+
+        $stmt = self::conn()->prepare($query);
+
+        $stmt->bindValue(":idUsuario", $this->getidUsuario());
+        $stmt->execute();
+        $listando = $stmt->fetch(\PDO::FETCH_ASSOC);
+        return $listando;
+    }
+
+    function listarPerfil($id) {
+        if ($id['perfil'] == 'professor') {
+			$perfil = 'idProfessor';
+			$perfilInner = 'idAluno';
+		} else {
+			$perfil = 'idAluno';
+			$perfilInner = 'idProfessor';
+		}
+		// query que irá realizar o select dos usuarios
+		$query = "SELECT u.nome, u.idUsuario, u.img FROM usuario AS u 
+					INNER JOIN relacaousuario AS r ON   
+						(r.$perfilInner = u.idUsuario)
+                    INNER JOIN preco AS pc
+                    INNER JOIN materias AS m
+                  WHERE r.$perfil = :idUsuario AND pc.materias_idmaterias =  m.idmaterias";
+        // SELECT u.nome, u.idUsuario, u.img, m.materia FROM usuario AS u INNER JOIN relacaousuario AS r ON (r.idAluno = u.idUsuario) 
+        // INNER JOIN preco AS pc INNER JOIN materias AS m WHERE r.idAluno = 1 AND pc.materias_idmaterias = m.idmaterias
+		// estabelece conexacao com banco de dados
+		$stmt = self::conn()->prepare($query);
+		// passa os parametros para query
+		$stmt->bindValue(':idUsuario', $id['idUsuario']);
+		// executa a query
+		$stmt->execute();
+		// fetchall(\PDO::FETCH_ASSOC) traz um array assossiativo com as mensagens do usuarios
+		// passando para a variavel $dataobj as informacoes necessárias
+		$dataObj = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+		// retorna os dados
+		return $dataObj;
+    }
+
+    function listar1()
+    {
+        $query = "SELECT u.idUsuario, u.nome, u.dataNas, u.email, u.cpf, u.rg, u.telefone,
+                       u.sexo, u.img, d.descricaoAula, d.descricaoPerfil, pc.valor
                     FROM usuario AS u
-                    INNER JOIN preco as pc
-                    INNER JOIN materias as m
-                   WHERE idUsuario = :idUsuario AND m.idmaterias = pc.materias_idmaterias";
+                    INNER JOIN descricao AS d
+                    INNER JOIN preco AS pc
+                   WHERE idUsuario = :idUsuario";
 
         $stmt = self::conn()->prepare($query);
 
@@ -253,47 +437,10 @@ class CadastroModel extends Database
     }
 
 
-    function setIdAluno($idAluno) {
-        $this->idAluno = $idAluno;
-    }
-    function getIdAluno(){
-        return $this->idAluno;
-    }
-    function setIdProfessor($idProfessor) {
-        $this->idProfessor = $idProfessor;
-    }
-    function getIdProfessor() {
-        return $this->idProfessor;
-    }
+   
 
-    function setPagamentoStatus($statusPagamento) {
-        $this->statusPagamento = $statusPagamento;
-    }
-    
-    function getPagamentoStatus(){
-        return $this->statusPagamento;
-    }
-    function setPagamentoId($idPagamento) {
-        $this->idPagamento = $idPagamento;
-    }
-    function getPagamentoId() {
-        return $this->idPagamento;
-    }
-
-    function setValor($valor) {
-        $this->valor = $valor;
-    }
-    function getValor(){
-        return $this->valor;
-    }
-    function setPagamentoOrdem($pagamentoOrdem) {
-        $this->pagamentoOrdem = $pagamentoOrdem;
-    }
-    function getPagamentoOrdem() {
-        return $this->pagamentoOrdem;
-    }
-
-    function salvarPagamento() {
+    function salvarPagamento()
+    {
 
         $query = "INSERT INTO compra(valor, idPagamento, statusPagamento, ordemPagamento, Usuario_idUsuario, pagador, recebedor) 
                     VALUES(:valor, :idPagamento, :statusPagamento, :ordemPagamento, :pagador, :pagador, :recebedor);
@@ -316,6 +463,6 @@ class CadastroModel extends Database
             $stmt->execute();
         } catch (\PDOException $e) {
             echo $e->getMessage();
-        }  
+        }
     }
 }

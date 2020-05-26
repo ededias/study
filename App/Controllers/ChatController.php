@@ -59,6 +59,10 @@ class ChatController extends Action
     (new ChatModels())->saveMsg($this);
   }
 
+  function getPersons() {
+    print_r($_GET);
+	}
+
   function msg()
   {
 
@@ -80,7 +84,7 @@ class ChatController extends Action
     // sendo 1 aluno e 2 professor
     $userInf = [
       'idUsuario' => $_SESSION['idUsuario'],
-      'idPerfil' => $_SESSION['perfil']
+      'perfil' => $_SESSION['perfil']
     ];
     // renderiza as pessoas com quem o aluno/professor tem uma 
     // conexao prévia ou no canto para poderem iniciar uma conversa

@@ -35,14 +35,14 @@ class UsuarioModel extends Database
 
         try {
 
-            $query = "SELECT u.idUsuario, u.nome, u.dataNas, u.email, u.cpf, u.rg, u.descricao, p.perfil FROM usuario AS u INNER JOIN perfil AS p ON (p.usuario_idUsuario = u.idUsuario) WHERE email = :email";
+            $query = "SELECT u.idUsuario, u.nome, u.dataNas, p.perfil FROM usuario AS u INNER JOIN perfil AS p ON (p.usuario_idUsuario = u.idUsuario) WHERE email = :email AND senha = :senha";
 
             // $query = "SELECT idUsuario, nome, dataNas, telefone, email, senha, cpf, rg, descricao, sexo, img, usuariocol FROM usuario WHERE email = :email AND senha = :senha";
 
             $stmt = self::conn()->prepare($query);
 
             $stmt->bindValue(':email', $this->__get('email'));
-            // $stmt->bindValue(':senha', md5($this->__get('password')));
+            $stmt->bindValue(':senha', md5($this->__get('password')));
 
             $stmt->execute();
 

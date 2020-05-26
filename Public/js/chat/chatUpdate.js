@@ -1,5 +1,6 @@
 $(document).ready(() => {
 
+
     function divValue() {
         const id = ($('#idEnviar').text());
         $("#idRecebedor").val(id);

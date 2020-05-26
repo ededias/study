@@ -51,13 +51,8 @@
               <div class="main-menu  d-none d-lg-block">
                 <nav>
                   <ul id="navigation">
-                    <li><a class="active" href="/">Inicio</a></li>
+                    <li><a class="active" href="/main">Inicio</a></li>
                     <li><a href="/cursos">Cursos</a></li>
-                    <!-- <li><a href="#">pages <i class="ti-angle-down"></i></a>
-                      <ul class="submenu">
-                        <li><a href="course_details.html">course details</a></li>
-                        <li><a href="elements.html">elements</a></li>
-                      </ul> -->
                     </li>
                     <li><a href="/chat">Chat</a></li>
                     <li><a href="/perfil">Perfil</a></li>
@@ -66,7 +61,7 @@
                 </nav>
               </div>
             </div>
-            
+
             <div class="col-12">
               <div class="mobile_menu d-block d-lg-none"></div>
             </div>
@@ -190,7 +185,7 @@
   </footer>
   <!-- Fim rodape  -->
 
-    
+
 
 
   <!-- JS here -->
@@ -212,7 +207,8 @@
   <script src="js/jquery.magnific-popup.min.js"></script>
   <script src="js/plugins.js"></script>
   <script src="js/gijgo.min.js"></script>
-
+  <script src="js/chat/chatUpdate.js"></script>
+  <script src="js/chat/chatsend.js"></script>
   <!--contact js-->
   <script src="js/contact.js"></script>
   <script src="js/jquery.ajaxchimp.min.js"></script>
@@ -221,11 +217,46 @@
   <script src="js/mail-script.js"></script>
   <script src="js/ajax-pagamento.js"></script>
   <script src="js/main.js"></script>
-  <script src="js/chat/chatUpdate.js"></script>
-  <script src="js/chat/chatsend.js"></script>
+
+  <script>
+    // $(document)(() => {
 
 
- 
+    function divValue() {
+      var id = ($('#idEnviar').text());
+      return id;
+    }
+
+    // href = $('#boxpessos')
+
+    // console.log(href);
+    $("boxpessoas").on('click', e => {
+      e.preventDefault()
+      console.log(teste);
+      const a = setInterval(() => {
+        $.ajax({
+          type: 'GET',
+          url: `/getPersons?id=${divValue()}`,
+          success: (res) => {
+            console.log(res)
+          }
+        }).done(res => {
+          console.log(res)
+        })
+        
+      })
+
+      clearInterval(a)
+    }, 20);
+
+    // })
+  </script>
+
+
+
+
+
+
 
 </body>
 

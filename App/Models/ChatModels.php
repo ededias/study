@@ -42,8 +42,11 @@ class ChatModels extends Database
 		// passando para a variavel $dataobj as informacoes necessárias
 		$dataObj = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 		// realiza um return das mensagens
+
 		return $dataObj;
 	}
+
+
 
 	// getusuer recebe com parametro dois ids
 	// sendo um do usuario e outro
@@ -52,10 +55,12 @@ class ChatModels extends Database
 	{
 		// separa os ids do perfil realizando a verificacao do id do perfil
 		// para saber qual parametro irá ser passado para a query
-		if ($id['idPerfil'] == '2') {
+		if ($id['perfil'] == 'professor') {
+
 			$perfil = 'idProfessor';
 			$perfilInner = 'idAluno';
 		} else {
+
 			$perfil = 'idAluno';
 			$perfilInner = 'idProfessor';
 		}
