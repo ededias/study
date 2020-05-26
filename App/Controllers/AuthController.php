@@ -29,7 +29,7 @@ class AuthController extends UsuarioModel
 		$this->__set('password', $_POST['password']);
 		
 		$result = $this->validar();
-		
+			print_r($result);
 		if (empty($result)) {
 			header('location: /?erro=0');
 		} else {

@@ -149,6 +149,14 @@ class Route extends Bootstrap
 
     // fim rotas chat 
     
+    //rota email
+    $routes['enviaremail'] = array(
+      'route' => '/enviaremail',
+      'controller' => 'EmailController',
+      'action' => 'enviaremail'
+    );
+
+    //fim rota email
 
     $this->setRoutes($routes);
   }

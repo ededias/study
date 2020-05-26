@@ -36,7 +36,24 @@ class AppController extends Action
 
 	public function cursos()
 	{
-		$this->render('cursos', 'main');
+		$infPessoais = new CadastroModel();
+
+		(new AuthController())->validate();
+
+		if ($_SESSION['perfil'] == 'aluno') {
+			$infPessoais->setPerfil('professor');
+			$result = $infPessoais->listarCasdastro();
+
+			$this->view->cursos = $result;
+			$this->render('cursos', 'main');
+		} else {
+
+			$infPessoais->setPerfil('professor');
+			$result = $infPessoais->listarCasdastro();
+			$this->view->cursos = $result;
+			$infPessoais->setPerfil('aluno');
+			$this->render('cursos', 'main');
+		}
 	}
 
 	public function perfil()

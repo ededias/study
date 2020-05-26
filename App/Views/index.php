@@ -51,7 +51,7 @@
                 <nav>
                   <ul id="navigation">
                     <li><a class="active" href="/">Inicio</a></li>
-                    
+
                     <!-- <li><a href="#">pages <i class="ti-angle-down"></i></a>
                       <ul class="submenu">
                         <li><a href="course_details.html">course details</a></li>
@@ -197,7 +197,39 @@
   </footer>
   <!-- Fim rodape  -->
 
-    
+  <!-- formulario  -->
+  <div id="test-form" class="white-popup-block mfp-hide">
+    <div class="popup_box ">
+      <div class="popup_inner">
+        <div class="logo text-center">
+          <a href="#">
+            <img src="img/form-logo.png" alt="">
+          </a>
+        </div>
+        <h3>Entrar</h3>
+
+        <form method="POST" action="/loginValidate">
+          <div class="row">
+            <div class="col-xl-12 col-md-12">
+              <input type="email" name="email" placeholder="Digite seu email">
+            </div>
+            <div class="col-xl-12 col-md-12">
+              <input type="password" name="password" placeholder="Senha">
+            </div>
+            <div class="col-xl-12">
+              <!-- <input type="submit" value="Entrar" class="boxed_btn_orange"> -->
+              <button type="submit" class="boxed_btn_orange">ENTRAR</button>
+            </div>
+          </div>
+        </form>
+        <p class="doen_have_acc">Não tem uma conta? <a class="text-primary" href="/registrar">Crie uma aqui</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+
+
 
 
   <!-- JS here -->
@@ -231,7 +263,7 @@
   <script src="js/endereco.js"></script>
 
 
- 
+
 
 </body>
 

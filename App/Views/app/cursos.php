@@ -31,8 +31,8 @@
              <div class="tab-content" id="myTabContent">
                  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                      <div class="row">
-                         <?php $result = $this->view->main;
-                            print_r($this->view->main);
+                         <?php $result = $this->view->cursos;
+                            print_r($this->view->cursos);
                             foreach ($result as $chave => $valor) :
                             
                             ?>

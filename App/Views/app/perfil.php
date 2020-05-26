@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-xl-6">
                 <div class="course_text">
-                    <h3><br>Joana da Silva</h3>
+                    <h3><br><?php echo $this->view->perfil['nome']; ?></h3>
                 </div>
             </div>
         </div>
@@ -17,56 +17,50 @@
         <div class="row">
             <div class="col-xl-7 col-lg-7">
                 <div class="single_courses">
-                    <h3>Sobre minhas aulas</h3>
-                    <form action="/descricao">
+
+                    <form action="/atualizar">
+                        <label for="descricaoaula">
+                            <h3>Sobre minhas aulas</h3>
+                        </label>
                         <div class="form-group">
-                        <textarea class="form-control" name="descricao" id="descricao" cols="30" rows="4"><?php echo $_SESSION['descricao'] ?></textarea>
+                            <textarea class="form-control" name="descricaoaula" id="descricaoaula" cols="30" rows="4"><?php echo $_SESSION['descricao'] ?></textarea>
                         </div>
-                        
+                        <label for="descricaoperfil">
+                            <h3>Descrição do Perfil</h3>
+                        </label>
+                        <div class="form-group">
+                            <textarea class="form-control" name="descricaoperfil" id="descricaoperfil" cols="30" rows="5"></textarea>
+                        </div>
+                        <label for="valoraula">
+                            <h3>Insira o valor hora de sua aula</h3>
+                        </label>
+                        <div class="form-group">
+                            <input class="form-control" name="valoraula" id="valoraula" type="text" placeholder="ex: R$50,00" value="<?php
+                            echo "R$ {$this->view->perfil["valor"]},00" ?>">
+                        </div>
+                        <div class="form-group">
+                        <h3>Selecione a matéria</h3>
+                        <select class="form-control">
+                            <option value="2">Portugues</option>
+                            <option value="3">Matemática</option>
+                            <option value="4">História</option>
+                            <option value="5">Geografia</option>
+                            <option value="6">Fisíca</option>
+                            <option value="7">Biologia</option>
+                            <option value="8">Química</option>
+                            <option value="9">Sociologia</option>
+                            <option value="10">Fisolofia</option>
+                        </select>
+                        </div>                  
                         <button class="boxed_btn" type="submit">Salvar</button>
                     </form>
                     <p> </p>
-
                 </div>
-
-                <?php if ($_SESSION['perfil'] == 'professor') : ?>
-                    <div class="single_courses">
-                        <h3 class="second_title">Escolha um pacote de horas</h3>
-                    </div>
-                    <form action="/mercadoPago" method="POST">
-                        <div class="main">
-
-                            <div class="radioholder">
-                                <input type="radio" name="pacote" value="80" checked>
-                                <label for="pt_website">Pacote 2H, R$ 80</label>
-                            </div>
-                            <div class="radioholder">
-                                <input type="radio" name="pacote" value="40">
-                                <label for="pt_mobile">Pacote 1H, R$ 40</label>
-                            </div>
-                            <div class="radioholder">
-                                <input type="radio" name="pacote" value="150">
-                                <label for="pt_application">Pacote 5H, R$ 150</label>
-                            </div>
-                            <div class="radioholder">
-                                <input type="radio" name="pacote" value="110">
-                                <label for="pt_illustration">Pacote 3H, R$ 110</label>
-                            </div>
-                            <?php //echo //print_r($this->view->perfil); 
-                            ?>
-                            <p>Após você escolher o pacote e finalizar o pagamento será liberado o chat com o professor para juntos decidirem onde serão as aulas. Bons estudos!</p>
-                        </div>
-
-                        <button type="submit" class="boxed_btn">Comprar</button>
-                    </form>
-                <?php endif; ?>
             </div>
-
-
             <div class="col-xl-5 col-lg-5">
                 <div class="courses_sidebar">
                     <div class="video_thumb">
-                        <img src="<?php echo $_SESSION['img'] ?>" alt="">
+                        <img src="<?php echo $this->view->perfil['img'] ?>" alt="">
 
                         </a>
                     </div>
@@ -75,36 +69,37 @@
 
                             <div class="name">
                                 <form enctype="multipart/form-data" action="/atualizar">
-                                    <div class="form-group" >
+                                    <div class="form-group">
                                         <label for="nome">Nome</label>
-                                        <h3><input type="text" class="form-control" id="nome" name="nome" value="<?php echo $_SESSION['nome'] ?>"></h3>
+                                        <h3><input type="text" class="form-control" id="nome" name="nome" value="<?php echo $this->view->perfil['nome'] ?>"></h3>
                                     </div>
                                     <div class="form-group">
                                         <label for="email">Email</label>
-                                        <h3><input type="email" class="form-control" id="email" name="email" value="<?php echo $_SESSION['email'] ?>" disabled></h3>
+                                        <h3><input type="email" class="form-control" id="email" name="email" value="<?php echo $this->view->perfil['email'] ?>" disabled></h3>
                                     </div>
                                     <div class="form-group">
                                         <label for="CPF">CPF</label>
-                                        <h3><input type="text" class="form-control" id="cpf" name="cpf" value="<?php echo $_SESSION['cpf'] ?>" disabled></h3>
+                                        <h3><input type="text" class="form-control" id="cpf" name="cpf" value="<?php echo $this->view->perfil['cpf'] ?>" disabled></h3>
                                     </div>
                                     <div class="form-group">
                                         <label for="RG">RG</label>
-                                        <h3><input type="text" class="form-control" id="rg" name="rg" value="<?php echo $_SESSION['rg'] ?>" disabled></h3>
+                                        <h3><input type="text" class="form-control" id="rg" name="rg" value="<?php echo $this->view->perfil['rg'] ?>" disabled></h3>
                                     </div>
                                     <div class="form-group">
                                         <label for="sexo">Sexo</label>
-                                        <h3><input type="text" class="form-control" id="sexo" name="sexo" value="<?php echo $_SESSION['sexo'] ?>"></h3>
+                                        <h3><input type="text" class="form-control" id="sexo" name="sexo" value="<?php echo $this->view->perfil['sexo'] ?>"></h3>
                                     </div>
                                     <div class="form-group">
                                         <label for="telefone">Telefone</label>
-                                        <h3><input type="text" class="form-control" id="telefone" name="telefone" value="<?php echo $_SESSION['telefone'] ?>"></h3>
+                                        <h3><input type="text" class="form-control" id="telefone" name="telefone" value="<?php echo $this->view->perfil['telefone'] ?>"></h3>
                                     </div>
+                                    <button class="boxed_btn" type="submit">Salvar</button>
                                 </form>
-                                
+
 
                             </div>
                         </div>
-                    
+
                     </div>
 
                 </div>
@@ -112,3 +107,4 @@
         </div>
     </div>
 </div>
+<?php print_r($this->view->perfil) ?>
