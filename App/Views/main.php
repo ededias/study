@@ -217,8 +217,10 @@
   <script src="js/mail-script.js"></script>
   <script src="js/ajax-pagamento.js"></script>
   <script src="js/main.js"></script>
-
-  <script>
+  
+  <script src="js/chat/chatPersons.js"></script>
+  
+  <!-- <script>
     // $(document)(() => {
 
 
@@ -251,7 +253,7 @@
 
     // })
   </script>
-
+ -->
 
 
 

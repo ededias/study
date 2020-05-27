@@ -29,13 +29,14 @@ class ChatModels extends Database
 		// query para realizar a selecao dos dados do usuario
 		$query = "SELECT chat, DATE_FORMAT(dataHora, '%d/%m/%Y %h:%i') 
                 AS data FROM chat WHERE 
-                (idEnviar = 1 and idReceber = 2) 
+                (idEnviar = :idEnviar and idReceber = :idReceber) 
                 or 
-                (idEnviar = 2 and idReceber = 1)";
+                (idEnviar = :idEnviar and idReceber = :idReceber)";
 		// estabelece a conexao com o banco de dados
 		$stmt = self::conn()->prepare($query);
 		// passa os parametros para query
-		$stmt->bindValue(':idUsuario', $userId);
+		$stmt->bindValue(':idEnviar', $userId['idEnviar']);
+		$stmt->bindValue(':idReceber', $userId['idReceber']);
 		// executa a query
 		$stmt->execute();
 		// fetchall(\PDO::FETCH_ASSOC) traz um array assossiativo com as mensagens do usuarios

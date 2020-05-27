@@ -59,17 +59,15 @@ class ChatController extends Action
     (new ChatModels())->saveMsg($this);
   }
 
-  function getPersons() {
-    print_r($_GET);
-	}
-
   function msg()
   {
 
     (new AuthController())->validate();
     // atualiza o feed de mensagens do chat passando o id do usuario como parametro
     // $this->view-updateMsg recebe o model de atualizacao
-    $this->view->updateMsg = (new ChatModels())->updateMsg($_SESSION['idUsuario']);
+   
+    $this->view->updateMsg = (new ChatModels())->updateMsg($_GET);
+    // print_r($a);
     // chama a funcao render que mostra na tela o conteudo das mensagens
     // recebendo dois parametros 'view', e 'layout'
     $this->render('msg', '');

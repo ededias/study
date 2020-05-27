@@ -72,32 +72,42 @@ class AppController extends Action
 	{
 		(new AuthController())->validate();
 		$infPessoais = (new CadastroModel());
-		if ($_SESSION['perfil'] == 'aluno') {
+		if (true) {
 
 			$infPessoais->setidUsuario($_SESSION['idUsuario']);
 			$lista = $infPessoais->perfilUsuario($infPessoais);
 
 			if (!empty($lista)) {
+
 				$this->view->perfil = $lista;
+
 				$this->render('perfil', 'main');
 			} else {
+
 				$lista = $infPessoais->listar1();
 				$this->view->perfil = $lista;
 				$this->render('perfil', 'main');
 			}
 		} else {
-
+			print_r($_SESSION['idUsuario']);
 			$infPessoais->setidUsuario($_SESSION['idUsuario']);
 			$lista = $infPessoais->perfilUsuario($infPessoais);
 			if (!empty($lista)) {
+
 				$this->view->perfil = $lista;
 				$this->render('perfil', 'main');
 			} else {
+
 				$lista = $infPessoais->listar1();
 				$this->view->perfil = $lista;
 				$this->render('perfil', 'main');
 			}
 		}
+	}
+
+	function atualizarDados()
+	{
+		print_r($_POST);
 	}
 
 	function pagamento()

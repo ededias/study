@@ -1,3 +1,22 @@
+<?php
+$msg = false;
+$p = false;
+$f = false;
+$s = false;
+
+if (isset($_GET)) {
+    if (isset($_GET['s']) == 's') {
+        $s = "s";
+    }
+    if (isset($_GET['p']) == 'p') {
+        $p = 'p';
+    }
+    if (isset($_GET['f']) == 'f') {
+        $f = 'f';
+    }
+}
+?>
+
 <div class="container paddingTop">
     <form id="formF" enctype="multipart/form-data" action="/salvar" method="post">
 
@@ -12,77 +31,90 @@
 
                 <div class="card-body">
                     <div class="panel-body">
-                        Qual teu tipo de conta?
+                        <?php if ($p != false) : ?>
+                            <div class="alert alert-danger alert-dismissible fade show">
+                                <strong>Erro!</strong>Por favor, selecione um perfil.
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            </div>
+                        <?php endif ?>
+                        Você é professor ou aluno?
                         <div class="form-group">
                             <input type="radio" name="perfil" value="aluno" id="aluno" class="with-gap">
-                            Aluno
+                            <label for="aluno">Aluno</label>
                             <input type="radio" name="perfil" value="professor" id="professor" class="with-gap">
-                            Professor
+                            <label for="professor">Professor</label>
                         </div>
-                        Nome completo
+                        <label for="nome">Nome completo</label>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <input type="text" class="form-control" name="nome" required>
+                                <input type="text" id="nome" class="form-control" name="nome" required>
 
                             </div>
                         </div>
 
-                        Email
+                        <label for="email">Email</label>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <input type="email" class="form-control" name="email" required>
+                                <input type="email" id="email" class="form-control" name="email" required>
 
                             </div>
                         </div>
-                        senha
+                        <?php if ($msg != false) : ?>
+                            <div class="alert alert-danger alert-dismissible fade show">
+                                <strong>Erro!</strong> As senhas não são idênticas.
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            </div>
+                        <?php endif ?>
+                        <label for="senha">Senha</label>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <input type="password" class="form-control" name="senha" required>
+                                <input type="password" id="senha" class="form-control" name="senha" required>
 
                             </div>
                         </div>
-                        Repitir senha
+                        <label for="rpsenha">Confirmar senha</label>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <input type="password" class="form-control" name="rpsenha" required>
+                                <input type="password" id="rpsenha" class="form-control" name="rpsenha" required>
 
                             </div>
                         </div>
-                        Telefone
+                        <label for="telefone">Telefone</label>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <input type="tel" class="form-control" name="telefone" required>
+                                <input type="tel" id="telefone" class="form-control" name="telefone" required>
 
                             </div>
                         </div>
-                        CPF
+                        <label for="CPF">CPF</label>
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <input type="tel" class="form-control" name="CPF" required>
+                                <input type="tel" id="CPF" class="form-control" name="CPF" required>
 
                             </div>
                         </div>
-                        Documento de identidade
+                        <label for="rg">Documento de identidade</label>
                         <div class="form-group form-float">
                             <div class="form-line">
                                 <input type="tel" class="form-control" name="rg" required>
 
                             </div>
                         </div>
-                        Sexo
+                        <label>Sexo</label>
                         <div class="form-group">
-                            <input type="radio" name="sexo" value="masculino" id="male" class="with-gap">
-                            Masculino
-                            <input type="radio" name="sexo" value="feminino" id="female" class="with-gap">
-                            Feminino
+                            <input type="radio" name="sexo" value="masculino" id="masculino" class="with-gap">
+                            <label for="masculino">Masculino</label>
+                            <input type="radio" name="sexo" value="feminino" id="feminino" class="with-gap">
+                            <label for="feminino">Feminino</label>
                         </div>
-                        Data de nascimento
+                        <label for="dataNas">Data de nascimento</label>
+
                         <div class="form-group form-float">
                             <div class="form-line">
                                 <input type="date" class="form-control date" name="dataNas" required placeholder="Ex: 01/01/2020">
                             </div>
                         </div>
-                        Endereço
+                        <label>Endereço</label>
                         <div class="form-group">
                             <div class="form-group">
                                 <div class="form-line">
@@ -140,13 +172,19 @@
 
                         </div>
 
-
+                        <?php if ($f != false) : ?>
+                            <div class="alert alert-danger alert-dismissible fade show">
+                                <strong>Erro!</strong>Por favor, selecione uma foto.
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            </div>
+                        <?php endif ?>
 
                         <div class="pt-3">
+                            <label>Foto</label>
                             <div class="form-group">
 
                                 <div class="form-line">
-                                    <input type="file" name="imagem" id="imagemPF">
+                                    <input type="file" name="imagem" placeholder="imagem" required id="imagemPF">
                                 </div>
 
                             </div>

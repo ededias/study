@@ -3,7 +3,7 @@
 // realiza um foreach das pessoas para mostrar na tela
 foreach ($this->view->renderPersons as $key => $data) { ?>
 
-	<a id="boxpersons" href="javascript:">
+	<a id="boxpersons" href="/msg?idReceber=<?php echo $data['idUsuario'] ?>&idEnviar=<?php echo $_SESSION['idUsuario'] ?>">
 		<div class="chat_list">
 
 			<div class="chat_people">

@@ -13,14 +13,14 @@ abstract class Database
 	{
 		// $jsonFile pega os dados de configuração com o banco de dados;
 		// $jsonStr transforma em texto;
-		$a = '../App/Config/dbConfig.json';
-
-		$jsonFile = file_get_contents($a, true);
+		$dev = '../App/Config/dbConfig.json';
+		$prd = "../bludv/Config/dbConfig.json";
+		$jsonFile = file_get_contents($dev, true);
 		$jsonStr = json_decode($jsonFile, true);
 		
 		try {
 			// inicia a instancia junto da classe PDO
-			self::$instance = new \PDO("mysql:host={$jsonStr['mysql']};dbname={$jsonStr['dbName']};charset=utf8",$jsonStr['username'], $jsonStr['password']);
+			self::$instance = new \PDO("mysql:host={$jsonStr['dev']['mysql']};dbname={$jsonStr['dev']['dbName']};charset=utf8",$jsonStr['dev']['username'], $jsonStr['dev']['password']);
 			return self::$instance;
 		} catch (\PDOException $e) {
 			

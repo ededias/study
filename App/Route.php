@@ -43,7 +43,11 @@ class Route extends Bootstrap
       'controller' => 'indexController',
       'action' => 'sobre'
     );
-
+    $routes['/salvar'] = array(
+      'route' => '/salvar',
+      'controller' => 'AuthController',
+      'action' => 'salvar'
+    );
    
 
     // fim rotas da index
@@ -61,12 +65,6 @@ class Route extends Bootstrap
       'route' => '/sair',
       'controller' => 'AuthController',
       'action' => 'exit'
-    );
-
-    $routes['/salva'] = array(
-      'route' => '/salvar',
-      'controller' => 'AuthController',
-      'action' => 'salvarCadastro'
     );
 
     // Fim rotas validacao ****

@@ -32,7 +32,7 @@ class CadastroModel extends Database
     private $descricaoPerfil;
     private $idPreco;
 
-    
+
     function setPerfil($perfil)
     {
         $this->perfil = $perfil;
@@ -181,7 +181,7 @@ class CadastroModel extends Database
     {
         $this->idUsuario = $idUsuario;
     }
-    
+
     function setIdDescricao($idDescricao)
     {
         $this->idDescricao = $idDescricao;
@@ -199,7 +199,7 @@ class CadastroModel extends Database
     {
         return $this->descricaoAula;
     }
-    
+
     function setDescricaoPerfil($descricaoPerfil)
     {
         $this->descricaoPerfil = $descricaoPerfil;
@@ -208,7 +208,7 @@ class CadastroModel extends Database
     {
         return $this->descricaoPerfil;
     }
-    
+
     function setIdMaterias($idMaterias)
     {
         $this->idMaterias = $idMaterias;
@@ -278,11 +278,25 @@ class CadastroModel extends Database
         return $this->idPreco;
     }
 
+    function selecionarEmail()
+    {
+        $query = "SELECT count(email) FROM usuario WHERE email = :email";
+        $stmt = self::conn()->prepare($query);
+        $stmt->bindValue(':email', $this->getemail());
+
+        $stmt->execute();
+        $result = $stmt->fetch(\PDO::FETCH_ASSOC);
+        if ($result >= 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 
     function salvarCadastro()
     {
-        $query = "INSERT INTO usuario (nome, dataNas, sexo, telefone, email, senha, cpf, rg) 
-                    VALUES (:nome, :dataNas, :sexo, :telefone, :email, :senha, :cpf, :rg);
+        $query = "INSERT INTO usuario (nome, dataNas, sexo, telefone, email, senha, img, cpf, rg) 
+                    VALUES (:nome, :dataNas, :sexo, :telefone, :email, :senha, :img, :cpf, :rg);
                 INSERT INTO endereco (rua, numero, cep, cidade, estado, bairro, complemento, usuario_idUsuario) 
                     VALUES (:rua, :numero, :cep, :cidade, :estado, :bairro, :complemento, LAST_INSERT_ID());
                 INSERT INTO perfil(perfil, usuario_idUsuario) VALUES (:perfil, LAST_INSERT_ID());";
@@ -297,6 +311,7 @@ class CadastroModel extends Database
         $stmt->bindValue(":senha", md5($this->getsenha()));
         $stmt->bindValue(":cpf", $this->getcpf());
         $stmt->bindValue(":rg", $this->getrg());
+        $stmt->bindValue(":img", $this->getImg());
         // endereco
         $stmt->bindValue(":rua", $this->getendereco());
         $stmt->bindValue(":numero", $this->getnumEnd());
@@ -309,24 +324,31 @@ class CadastroModel extends Database
         $stmt->bindValue(":perfil", $this->getPerfil());
 
         try {
-
-            $stmt->execute();
+            $result = $this->selecionarEmail();
+            if ($result == true) {
+                return false;
+            } else {
+                $stmt->execute();
+                return true;
+            }
         } catch (\PDOException $e) {
 
             return "ERROR" . $e->getMessage();
         }
     }
 
-    function bindValuesDescricao() {
+    function bindValuesDescricao()
+    {
         $query = "SELECT * FROM descricao WHERE idDescricao = idDescricao";
     }
 
-    
-    
-    function atualizarCad() {
+
+
+    function atualizarCad()
+    {
         $result = $this->getIdDescricao();
-        if($result = '') {
-            
+        if ($result = '') {
+
             $query = "UPDATE descricao SET descricaoAula = :descricaoAula, descricaoPerfil = :descricaoPerfil 
                         WHERE idDescricao = :idDescricao AND usuario_idUsuario = :idUsuario;
                       UPDATE preco SET valor = :valor, materias_idmaterias = :idMateria WHERE idPreco = :idPreco";
@@ -334,22 +356,22 @@ class CadastroModel extends Database
             $stmt->bindValue(':idDescricao', $this->getidDescricao());
             $stmt->bindValue(':idPreco', $this->getIdPreco());
         } else {
-            
+
             $query = "INSERT INTO descricao(descricaoAula, descricaoPerfil, usuario_idUsuario) VALUES 
                         (:descricaoAula, :descricaoPerfil, :idUsuario);
                       INSERT INTO preco(usuario_idUsuario, valor, materias_idMaterias) VALUES (:idUsuario, :valor, :idMateria)";
             $stmt = self::conn()->prepare($query);
         }
-        
+
         $stmt = self::conn()->prepare($query);
         $stmt->bindValue(':descricaoAula', $this->getDescricaoAula());
         $stmt->bindValue(':descricaoPerfil', $this->getDescricaoPerfil());
-        
+
         $stmt->bindValue(':valor', $this->getValor());
 
         $stmt->bindValue(':idMateria', $this->getIdMaterias());
         $stmt->bindValue(':idUsuario', $this->getIdUsuario());
-        
+
 
         $stmt->execute();
     }
@@ -375,30 +397,31 @@ class CadastroModel extends Database
         $query = "SELECT u.idUsuario, u.nome, u.dataNas, 
                          u.sexo, u.img, u.email, u.cpf, u.rg, u.sexo, u.telefone
                         , pc.valor, pc.idPreco, m.materia, d.descricaoAula, d.descricaoPerfil, d.idDescricao
-            FROM usuario AS u
-                INNER JOIN descricao as d 
-                INNER JOIN preco as pc
-                INNER JOIN materias as m
-            WHERE idUsuario = :idUsuario AND m.idmaterias = pc.materias_idmaterias AND d.usuario_idUsuario = :idUsuario AND pc.usuario_idUsuario = :idUsuario";
+                    FROM usuario AS u
+                        INNER JOIN descricao as d 
+                        INNER JOIN preco as pc
+                        INNER JOIN materias as m
+                    WHERE idUsuario = :idUsuario AND m.idmaterias = pc.materias_idmaterias AND d.usuario_idUsuario = :idUsuario AND pc.usuario_idUsuario = :idUsuario";
 
         $stmt = self::conn()->prepare($query);
-
+        print_r($this->getidUsuario());
         $stmt->bindValue(":idUsuario", $this->getidUsuario());
         $stmt->execute();
         $listando = $stmt->fetch(\PDO::FETCH_ASSOC);
         return $listando;
     }
 
-    function listarPerfil($id) {
+    function listarPerfil($id)
+    {
         if ($id['perfil'] == 'professor') {
-			$perfil = 'idProfessor';
-			$perfilInner = 'idAluno';
-		} else {
-			$perfil = 'idAluno';
-			$perfilInner = 'idProfessor';
-		}
-		// query que irá realizar o select dos usuarios
-		$query = "SELECT u.nome, u.idUsuario, u.img FROM usuario AS u 
+            $perfil = 'idProfessor';
+            $perfilInner = 'idAluno';
+        } else {
+            $perfil = 'idAluno';
+            $perfilInner = 'idProfessor';
+        }
+        // query que irá realizar o select dos usuarios
+        $query = "SELECT u.nome, u.idUsuario, u.img FROM usuario AS u 
 					INNER JOIN relacaousuario AS r ON   
 						(r.$perfilInner = u.idUsuario)
                     INNER JOIN preco AS pc
@@ -406,17 +429,17 @@ class CadastroModel extends Database
                   WHERE r.$perfil = :idUsuario AND pc.materias_idmaterias =  m.idmaterias";
         // SELECT u.nome, u.idUsuario, u.img, m.materia FROM usuario AS u INNER JOIN relacaousuario AS r ON (r.idAluno = u.idUsuario) 
         // INNER JOIN preco AS pc INNER JOIN materias AS m WHERE r.idAluno = 1 AND pc.materias_idmaterias = m.idmaterias
-		// estabelece conexacao com banco de dados
-		$stmt = self::conn()->prepare($query);
-		// passa os parametros para query
-		$stmt->bindValue(':idUsuario', $id['idUsuario']);
-		// executa a query
-		$stmt->execute();
-		// fetchall(\PDO::FETCH_ASSOC) traz um array assossiativo com as mensagens do usuarios
-		// passando para a variavel $dataobj as informacoes necessárias
-		$dataObj = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-		// retorna os dados
-		return $dataObj;
+        // estabelece conexacao com banco de dados
+        $stmt = self::conn()->prepare($query);
+        // passa os parametros para query
+        $stmt->bindValue(':idUsuario', $id['idUsuario']);
+        // executa a query
+        $stmt->execute();
+        // fetchall(\PDO::FETCH_ASSOC) traz um array assossiativo com as mensagens do usuarios
+        // passando para a variavel $dataobj as informacoes necessárias
+        $dataObj = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        // retorna os dados
+        return $dataObj;
     }
 
     function listar1()
@@ -437,7 +460,7 @@ class CadastroModel extends Database
     }
 
 
-   
+
 
     function salvarPagamento()
     {

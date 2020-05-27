@@ -1,6 +1,14 @@
-{   
-    "mysql": "localhost",
-    "dbName": "bludv",
-    "username": "root",
-    "password": ""
+{
+    "dev": {
+        "mysql": "localhost",
+        "dbName": "bludv",
+        "username": "root",
+        "password": ""
+    },
+    "prd": {
+        "mysql": "br18.hostgator.com.br",
+        "dbName": "edenil62_bludv",
+        "username": "edenil62_bludv00",
+        "password": "d4e9af8dbf7c438ad011f659e8d68350"
+    }
 }
