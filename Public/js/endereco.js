@@ -9,12 +9,11 @@ $(document).ready(() => {
                 
                 if (!("erro" in dados)) {
 
-
-                    $('#endereco').val(dados.logradouro);
-                    
+                    console.log(dados);
+                    $('#endereco').val(dados.logradouro);                    
                     $('#bairro').val(dados.bairro);
                     $('#cidade').val(dados.localidade);
-                    $('#estado').val(dados.estado);
+                    $('#estado').val(dados.uf);
 
                 }
 

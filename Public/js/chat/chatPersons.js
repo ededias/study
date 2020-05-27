@@ -2,24 +2,25 @@ $(document).ready(() => {
 
     function divValue() {
         var id = ($('#idEnviar').text());
-        return id;
+        $("#idRecebedor").val(id);
     }
 
-    href = $('#boxpessos')
-    console.log($(href).attr('href'))
-    $(href).click((e) => {
-        e.preventDefault();
+    function urlChat() {
+        return $("#boxpersons").attr('href')
+    }
+
+    $(document).on('click', '#boxpersons', function (e) {
+        e.preventDefault()
+        setInterval(() => {
+            $.ajax({
+                type: 'GET',
+                url: urlChat(),
+                success: (res) => {
+                    $('#chat').html(res)
+                }
+            });
+            divValue()
+        }, 2000);
     })
-    $.ajax({
-        type: 'GET',
-        url: `/getPersons?id=${2}`,
-        success: (res) => {
-            console.log(res)
-        }
-    })
-    const a = setInterval(() => {
-        divValue();
-        clearInterval(a)
-    }, 2000);
-    console.log(divValue())
+    // divValue();
 })

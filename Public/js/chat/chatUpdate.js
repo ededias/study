@@ -6,17 +6,17 @@ $(document).ready(() => {
         $("#idRecebedor").val(id);
     }
 
-    function ajax() {
-        var data = $(this).serialize();
-        return $.ajax({
-            type: "GET",
-            url: '/msg',
-            dataType: data,
-            success: function ajax(res) {
-                $("#chat").html(`${res}`);
-            }
-        });
-    }
+    // function ajax() {
+    //     var data = $(this).serialize();
+    //     return $.ajax({
+    //         type: "GET",
+    //         url: '/msg',
+    //         dataType: data,
+    //         success: function ajax(res) {
+    //             $("#chat").html(`${res}`);
+    //         }
+    //     });
+    // }
 
 
 
@@ -42,22 +42,22 @@ $(document).ready(() => {
         if (this.id == "buttonMsg") {
             const interval = setInterval(() => {
                 scroll();
-                ajax();
+                // ajax();
                 clearInterval(interval);
             }, 1000);
         }
     });
     // scroll();
-    ajax();
+    // ajax();
     ajaxP();
-    const a = setInterval(() => {
-        scroll();
-        divValue();
-        clearInterval(a)
-    }, 2000);
-    setInterval(() => {
-        ajaxP();
-        ajax();
-    }, 2000);
+    // const a = setInterval(() => {
+    //     scroll();
+    //     divValue();
+    //     clearInterval(a)
+    // }, 2000);
+    // setInterval(() => {
+    //     ajaxP();
+    //     // ajax();
+    // }, 2000);
 
 });

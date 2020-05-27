@@ -181,11 +181,11 @@ input {
 }
 
 
-/* label {
+label {
     margin: 0.125em 0.125em 0 0;
-    float: right;
-    
-  } */
+    /* float: right; */
+    font-size: 20px;
+  }
 
 input[type="search"] {
     border: 2px solid #E87A31;
