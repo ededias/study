@@ -19,20 +19,22 @@
                 <div class="single_courses">
 
                     <form method="post" action="/atualizar">
-                        <label for="descricaoaula">
-                            <h3>Sobre minhas aulas</h3>
-                        </label>
-                        <div class="form-group">
-                            <textarea class="form-control" name="descricaoaula" id="descricaoaula" cols="30" rows="4"><?php if (!isset($this->view->perfil['descricaoPerfil'])) $valor = '';
-                                                                                                                        else $valor = $this->view->perfil['descricaoPerfil'];
-                                                                                                                        echo $valor ?></textarea>
-                        </div>
-                        <label for="descricaoperfil">
-                            <h3>Descrição do Perfil</h3>
-                        </label>
-                        <div class="form-group">
-                            <textarea class="form-control" name="descricaoperfil" id="descricaoperfil" cols="30" rows="5"><?php if (!isset($this->view->perfil['descricaoAula'])) $valor = '';
+                        <?php if ($_SESSION['perfil'] != 'aluno') : ?>
+                            <label for="descricaoaula">
+                                <h3>Sobre minhas aulas</h3>
+                            </label>
+                            <div class="form-group">
+                                <textarea class="form-control" name="descricaoaula" id="descricaoaula" cols="30" rows="4"><?php if (!isset($this->view->perfil['descricaoAula'])) $valor = '';
                                                                                                                             else $valor = $this->view->perfil['descricaoAula'];
+                                                                                                                            echo $valor ?></textarea>
+                            </div>
+                        <?php endif; ?>
+                        <label for="descricaoperfil">
+                            <h3>Sobre mim</h3>
+                        </label>
+                        <div class="form-group">
+                            <textarea class="form-control" name="descricaoperfil" id="descricaoperfil" cols="30" rows="5"><?php if (!isset($this->view->perfil['descricaoPerfil'])) $valor = '';
+                                                                                                                            else $valor = $this->view->perfil['descricaoPerfil'];
                                                                                                                             echo $valor ?></textarea>
                         </div>
 
@@ -84,7 +86,7 @@
                         <div class="auhor_header">
 
                             <div class="name">
-                                <form enctype="multipart/form-data" action="/atualizar">
+                                <form method="POST" enctype="multipart/form-data" action="/atualizarPerfil">
                                     <div class="form-group">
                                         <label for="nome">Nome</label>
                                         <h3><input type="text" class="form-control" id="nome" name="nome" value="<?php echo $this->view->perfil['nome'] ?>"></h3>
@@ -103,7 +105,11 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="sexo">Sexo</label>
-                                        <h3><input type="text" class="form-control" id="sexo" name="sexo" value="<?php echo $this->view->perfil['sexo'] ?>"></h3>
+                                        <h3><input type="text" class="form-control" id="sexo" name="sexo" value="<?php echo $this->view->perfil['sexo'] ?>" disabled></h3>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="senha">Senha</label>
+                                        <input type="password" name="senha" class="form-control" id="senha">
                                     </div>
                                     <div class="form-group">
                                         <label for="telefone">Telefone</label>
@@ -123,3 +129,4 @@
         </div>
     </div>
 </div>
+<?php print_r($this->view->perfil)?>

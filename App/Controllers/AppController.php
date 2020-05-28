@@ -72,42 +72,37 @@ class AppController extends Action
 	{
 		(new AuthController())->validate();
 		$infPessoais = (new CadastroModel());
-		if (true) {
 
-			$infPessoais->setidUsuario($_SESSION['idUsuario']);
-			$lista = $infPessoais->perfilUsuario($infPessoais);
+		$infPessoais->setidUsuario($_SESSION['idUsuario']);
+		$lista = $infPessoais->perfilUsuario($infPessoais);
 
-			if (!empty($lista)) {
+		if (!empty($lista)) {
 
-				$this->view->perfil = $lista;
-
-				$this->render('perfil', 'main');
-			} else {
-
-				$lista = $infPessoais->listar1();
-				$this->view->perfil = $lista;
-				$this->render('perfil', 'main');
-			}
+			$this->view->perfil = $lista;
+			$this->render('perfil', 'main');
 		} else {
-			print_r($_SESSION['idUsuario']);
-			$infPessoais->setidUsuario($_SESSION['idUsuario']);
-			$lista = $infPessoais->perfilUsuario($infPessoais);
-			if (!empty($lista)) {
 
-				$this->view->perfil = $lista;
-				$this->render('perfil', 'main');
-			} else {
-
-				$lista = $infPessoais->listar1();
-				$this->view->perfil = $lista;
-				$this->render('perfil', 'main');
-			}
+			$lista = $infPessoais->listar1();
+			$this->view->perfil = $lista;
+			$this->render('perfil', 'main');
 		}
 	}
 
-	function atualizarDados()
+	function atualizarPerfil()
 	{
-		print_r($_POST);
+		(new AuthController())->validate();
+
+		$atualizarPerfil = new CadastroModel();
+
+		if (!empty($_POST['senha'])) {
+			$atualizarPerfil->setsenha($_POST['senha']);
+		}
+
+		$atualizarPerfil->settelefone($_POST['telefone']);
+		$atualizarPerfil->setnome($_POST['nome']);
+		$atualizarPerfil->setidUsuario($_SESSION['idUsuario']);
+		$atualizarPerfil->atualizarPerfil();
+		// header('location: /perfil');
 	}
 
 	function pagamento()

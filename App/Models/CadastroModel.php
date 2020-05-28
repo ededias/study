@@ -337,9 +337,29 @@ class CadastroModel extends Database
         }
     }
 
-    function bindValuesDescricao()
+    function atualizarPerfil()
     {
-        $query = "SELECT * FROM descricao WHERE idDescricao = idDescricao";
+        if (empty($this->getsenha())) {
+            $query = "UPDATE usuario SET nome = :nome, telefone = :telefone WHERE idUsuario = :idUsuario";
+            $stmt = self::conn()->prepare($query);
+            $stmt->bindValue(':nome', $this->getnome());
+            $stmt->bindValue(':telefone', $this->gettelefone());
+        } else {
+
+            $query = "UPDATE usuario SET nome = :nome, telefone = :telefone, senha = :senha WHERE idUsuario = :idUsuario";
+
+            $stmt = self::conn()->prepare($query);
+            $stmt->bindValue(':nome', $this->getnome());
+            $stmt->bindValue(':telefone', $this->gettelefone());
+        }
+
+        $stmt->bindValue(':idUsuario', $this->getidUsuario());
+
+        try {
+            $stmt->execute();
+        } catch (\PDOException $e) {
+            echo $e->getMessage();
+        }
     }
 
 
@@ -347,7 +367,8 @@ class CadastroModel extends Database
     function atualizarCad()
     {
         $result = $this->getIdDescricao();
-        if ($result = '') {
+        echo $result;
+        if (!empty($result)) {
 
             $query = "UPDATE descricao SET descricaoAula = :descricaoAula, descricaoPerfil = :descricaoPerfil 
                         WHERE idDescricao = :idDescricao AND usuario_idUsuario = :idUsuario;
@@ -363,7 +384,7 @@ class CadastroModel extends Database
             $stmt = self::conn()->prepare($query);
         }
 
-        $stmt = self::conn()->prepare($query);
+
         $stmt->bindValue(':descricaoAula', $this->getDescricaoAula());
         $stmt->bindValue(':descricaoPerfil', $this->getDescricaoPerfil());
 
@@ -371,24 +392,33 @@ class CadastroModel extends Database
 
         $stmt->bindValue(':idMateria', $this->getIdMaterias());
         $stmt->bindValue(':idUsuario', $this->getIdUsuario());
-
-
-        $stmt->execute();
+        
+        try {
+            $stmt->execute();
+        } catch (\PDOException $e) {
+            echo $e->getMessage();
+        }
     }
 
     function listarCasdastro()
     {
         $query = "SELECT * FROM usuario AS u 
-                    INNER JOIN perfil AS p ON 
-                        (u.idUsuario = p.usuario_idUsuario)
-                    inner join preco as pc
+                    INNER JOIN perfil AS p ON
+                    (u.idUsuario = p.usuario_idUsuario)
+                    inner join preco as pc ON
+                    (u.idUsuario = pc.usuario_idUsuario)
                     inner join materias as m
                 WHERE p.perfil = :perfil AND m.idmaterias = pc.materias_idmaterias;";
 
         $stmt = self::conn()->prepare($query);
         $stmt->bindValue(':perfil', $this->getPerfil());
-        $stmt->execute();
-        $lista = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+        try {
+            $stmt->execute();
+            $lista = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            echo $e->getMessage();
+        }
         return $lista;
     }
 
@@ -406,9 +436,14 @@ class CadastroModel extends Database
         $stmt = self::conn()->prepare($query);
         print_r($this->getidUsuario());
         $stmt->bindValue(":idUsuario", $this->getidUsuario());
-        $stmt->execute();
-        $listando = $stmt->fetch(\PDO::FETCH_ASSOC);
-        return $listando;
+
+        try {
+            $stmt->execute();
+            $listando = $stmt->fetch(\PDO::FETCH_ASSOC);
+            return $listando;
+        } catch (\PDOException $e) {
+            echo $e->getMessage();
+        }
     }
 
     function listarPerfil($id)
@@ -421,7 +456,7 @@ class CadastroModel extends Database
             $perfilInner = 'idProfessor';
         }
         // query que irá realizar o select dos usuarios
-        $query = "SELECT u.nome, u.idUsuario, u.img FROM usuario AS u 
+        $query = "SELECT u.nome, u.idUsuario, u.img, pc.valor FROM usuario AS u 
 					INNER JOIN relacaousuario AS r ON   
 						(r.$perfilInner = u.idUsuario)
                     INNER JOIN preco AS pc
@@ -434,18 +469,22 @@ class CadastroModel extends Database
         // passa os parametros para query
         $stmt->bindValue(':idUsuario', $id['idUsuario']);
         // executa a query
-        $stmt->execute();
-        // fetchall(\PDO::FETCH_ASSOC) traz um array assossiativo com as mensagens do usuarios
-        // passando para a variavel $dataobj as informacoes necessárias
-        $dataObj = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-        // retorna os dados
-        return $dataObj;
+        try {
+            $stmt->execute();
+            // fetchall(\PDO::FETCH_ASSOC) traz um array assossiativo com as mensagens do usuarios
+            // passando para a variavel $dataobj as informacoes necessárias
+            $dataObj = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            // retorna os dados
+            return $dataObj;
+        } catch (\PDOException $e) {
+            echo $e->getMessage();
+        }
     }
 
     function listar1()
     {
         $query = "SELECT u.idUsuario, u.nome, u.dataNas, u.email, u.cpf, u.rg, u.telefone,
-                       u.sexo, u.img, d.descricaoAula, d.descricaoPerfil, pc.valor
+                       u.sexo, u.img, d.descricaoAula, d.descricaoPerfil, pc.valor, d.idDescricao
                     FROM usuario AS u
                     INNER JOIN descricao AS d
                     INNER JOIN preco AS pc
@@ -454,9 +493,13 @@ class CadastroModel extends Database
         $stmt = self::conn()->prepare($query);
 
         $stmt->bindValue(":idUsuario", $this->getidUsuario());
-        $stmt->execute();
-        $listando = $stmt->fetch(\PDO::FETCH_ASSOC);
-        return $listando;
+        try {
+            $stmt->execute();
+            $listando = $stmt->fetch(\PDO::FETCH_ASSOC);
+            return $listando;
+        } catch (\PDOException $e) {
+            echo $e->getMessage();
+        }
     }
 
 
@@ -479,8 +522,6 @@ class CadastroModel extends Database
 
         $stmt->bindValue(':pagador', $this->getIdAluno());
         $stmt->bindValue(':recebedor', $this->getIdProfessor());
-
-        // $stmt->execute();
 
         try {
             $stmt->execute();

@@ -117,7 +117,13 @@ class Route extends Bootstrap
       'action' => 'mercadoPago'
     );
 
-   
+    $routes['/atualizarPerfil'] = array(
+      'route' => '/atualizarPerfil',
+      'controller' => 'AppController',
+      'action' => 'atualizarPerfil'
+    );
+
+    
 
     // Fim Rotas da aplicacao ***
 

@@ -42,7 +42,7 @@
           <div class="row align-items-center no-gutters">
             <div class="col-xl-2 col-lg-2">
               <div class="logo-img">
-                <a href="/">
+                <a href="/main">
                   <img src="img/logo2.png" alt="">
                 </a>
               </div>
@@ -52,8 +52,9 @@
                 <nav>
                   <ul id="navigation">
                     <li><a class="active" href="/main">Inicio</a></li>
-                    <li><a href="/cursos">Cursos</a></li>
-                    </li>
+                    <?php if ($_SESSION['perfil'] != 'professor') : ?>
+                      <li><a href="/cursos">Cursos</a></li>
+                    <?php endif; ?>
                     <li><a href="/chat">Chat</a></li>
                     <li><a href="/perfil">Perfil</a></li>
                     <li><a href="/sair">Sair</a></li>
@@ -217,48 +218,9 @@
   <script src="js/mail-script.js"></script>
   <script src="js/ajax-pagamento.js"></script>
   <script src="js/main.js"></script>
-  
+
   <script src="js/chat/chatPersons.js"></script>
-  
-  <!-- <script>
-    // $(document)(() => {
-
-
-    function divValue() {
-      var id = ($('#idEnviar').text());
-      return id;
-    }
-
-    // href = $('#boxpessos')
-
-    // console.log(href);
-    $("boxpessoas").on('click', e => {
-      e.preventDefault()
-      console.log(teste);
-      const a = setInterval(() => {
-        $.ajax({
-          type: 'GET',
-          url: `/getPersons?id=${divValue()}`,
-          success: (res) => {
-            console.log(res)
-          }
-        }).done(res => {
-          console.log(res)
-        })
-        
-      })
-
-      clearInterval(a)
-    }, 20);
-
-    // })
-  </script>
- -->
-
-
-
-
-
+  <script src="js/perfil.js"></script>
 
 </body>
 

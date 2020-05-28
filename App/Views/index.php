@@ -51,16 +51,11 @@
                 <nav>
                   <ul id="navigation">
                     <li><a class="active" href="/">Inicio</a></li>
-
-                    <!-- <li><a href="#">pages <i class="ti-angle-down"></i></a>
-                      <ul class="submenu">
-                        <li><a href="course_details.html">course details</a></li>
-                        <li><a href="elements.html">elements</a></li>
-                      </ul> -->
                     </li>
                     <li><a href="/sobre">Sobre</a></li>
 
                     <li><a href="/contato">Contato</a></li>
+                    <li><a href="#test-form" class="login popup-with-form">Entrar</a></li>
                   </ul>
                 </nav>
               </div>

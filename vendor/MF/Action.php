@@ -25,8 +25,10 @@ class Action
 
 		// verifica que o arquivo php existe ou não de forma automatica e retorna ele para o usuario 
 		// caso não exista retorna o proprio conteudo da metodo a baixo
-		if (file_exists("../App/Views/$layout.php")) {
-			require_once "../App/Views/$layout.php";
+		$dev = "../App/Views/$layout.php";
+		$prd = "../bludv/App/Views/$layout.php";
+		if (file_exists($dev)) {
+			require_once $dev;
 		} else {
 			$this->content();
 		}
@@ -41,7 +43,7 @@ class Action
 
 		$currentClass = str_replace("App\\Controllers\\", "", $currentClass);
 		$currentClass = strtolower(str_replace("Controller", "", $currentClass));
-
 		require_once "../App/Views/$currentClass/{$this->view->page}.php";
+		// require_once "../bludv/App/Views/$currentClass/{$this->view->page}.php";
 	}
 }
