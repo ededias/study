@@ -37,12 +37,12 @@
                           </a>
                         </div>
                         <div class="courses_info">
-                          <span>Photoshop</span>
-                          <h3><a href="/pagamento?professor=<?php echo $valor['idUsuario'] ?>">Aprende de uma vez por todas! <strong>Confira</strong></a></h3>
+                          <span><?php echo $valor['nome'] ?></span>
+                          <h3><a href="/pagamento?professor=<?php echo $valor['idUsuario'] ?>">Clique no perfil para entrar em contato!</a></h3>
                           <div class="star_prise d-flex justify-content-between">
                             <div class="prise">
                               <span class="active_prise">
-                                R$49
+                              <?php echo $valor['valor'] ?>
                               </span>
                             </div>
                           </div>
@@ -62,3 +62,5 @@
 </div>
 
 <!-- Fim depoiments -->
+
+
