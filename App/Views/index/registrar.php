@@ -37,7 +37,7 @@ if (isset($_GET)) {
                                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                             </div>
                         <?php endif ?>
-                        Você é professor ou aluno?
+                        <label>Você é professor ou aluno?</label>
                         <div class="form-group">
                             <input type="radio" name="perfil" value="aluno" id="aluno" class="with-gap">
                             <label for="aluno">Aluno</label>

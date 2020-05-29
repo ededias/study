@@ -104,25 +104,21 @@
               <div class="socail_links">
                 <ul>
                   <li>
-                    <a href="#">
+                    <a href="https://www.facebook.com/BluDeveloper/">
                       <i class="ti-facebook"></i>
                     </a>
                   </li>
                   <li>
-                    <a href="#">
+                    <a href="https://twitter.com/bludeveloper">
                       <i class="ti-twitter-alt"></i>
                     </a>
                   </li>
                   <li>
-                    <a href="#">
+                    <a href="https://www.instagram.com/bludeveloper/">
                       <i class="fa fa-instagram"></i>
                     </a>
                   </li>
-                  <li>
-                    <a href="#">
-                      <i class="fa fa-youtube-play"></i>
-                    </a>
-                  </li>
+                
                 </ul>
               </div>
 
@@ -149,9 +145,9 @@
                 Sobre nós
               </h3>
               <ul>
-                <li><a href="#">Quem somos?</a></li>
-                <li><a href="#">Nossos valores</a></li>
-                <li><a href="#">Precisando de ajuda?</a></li>
+                <li><a href="sobre">Quem somos?</a></li>
+                <li><a href="contato">Contato</a></li>
+                
 
               </ul>
             </div>

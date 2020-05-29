@@ -111,11 +111,7 @@
                     <a href="#">
                       <i class="fa fa-instagram"></i>
                     </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i class="fa fa-youtube-play"></i>
-                    </a>
+                  </li>                 
                   </li>
                 </ul>
               </div>
