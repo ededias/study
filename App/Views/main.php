@@ -1,3 +1,4 @@
+<?php $url = $_SERVER['REQUEST_URI'] ?>
 <!doctype html>
 <html class="no-js" lang="zxx">
 
@@ -51,12 +52,12 @@
               <div class="main-menu  d-none d-lg-block">
                 <nav>
                   <ul id="navigation">
-                    <li><a class="active" href="/main">Inicio</a></li>
+                    <li><a <?php if ($url == "/main") { ?> class="active" <?php } else {  ?> class="" <?php } ?> class="active" href="/main">Inicio</a></li>
                     <?php if ($_SESSION['perfil'] != 'professor') : ?>
-                      <li><a href="/cursos">Cursos</a></li>
+                      <li><a <?php if ($url == "/cursos") { ?> class="active" <?php } else {  ?> class="" <?php } ?> href="/cursos">Cursos</a></li>
                     <?php endif; ?>
-                    <li><a href="/chat">Chat</a></li>
-                    <li><a href="/perfil">Perfil</a></li>
+                    <li><a <?php if ($url == "/chat") { ?> class="active" <?php } else {  ?> class="" <?php } ?> href="/chat">Chat</a></li>
+                    <li><a <?php if ($url == "/perfil") { ?> class="active" <?php } else {  ?> class="" <?php } ?> href="/perfil">Perfil</a></li>
                     <li><a href="/sair">Sair</a></li>
                   </ul>
                 </nav>
@@ -111,7 +112,7 @@
                     <a href="#">
                       <i class="fa fa-instagram"></i>
                     </a>
-                  </li>                 
+                  </li>
                   </li>
                 </ul>
               </div>

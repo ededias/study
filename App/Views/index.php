@@ -1,3 +1,4 @@
+<?php $url = $_SERVER['REQUEST_URI']; ?>
 <!doctype html>
 <html class="no-js" lang="zxx">
 
@@ -50,12 +51,12 @@
               <div class="main-menu  d-none d-lg-block">
                 <nav>
                   <ul id="navigation">
-                    <li><a class="active" href="/">Inicio</a></li>
+                    <li><a <?php if ($url == "/") { ?> class="active" <?php } else {  ?> class="" <?php } ?> href="/">Inicio</a></li>
                     </li>
-                    <li><a href="/sobre">Sobre</a></li>
+                    <li><a <?php if ($url == "/sobre") { ?> class="active" <?php } else {  ?> class="" <?php } ?>href="/sobre">Sobre</a></li>
 
-                    <li><a href="/contato">Contato</a></li>
-                    <li><a href="#test-form" class="login popup-with-form">Entrar</a></li>
+                    <li><a <?php if ($url == "/contato") { ?> class="active" <?php } else {  ?> class="" <?php } ?> href="/contato">Contato</a></li>
+                    <li><a href="#test-form" style="display: none;" class="login popup-with-form">Entrar</a></li>
                   </ul>
                 </nav>
               </div>
@@ -70,7 +71,9 @@
               </div>
             </div>
             <div class="col-12">
-              <div class="mobile_menu d-block d-lg-none"></div>
+              <div class="mobile_menu d-block d-lg-none">
+                
+              </div>
             </div>
           </div>
         </div>
@@ -118,7 +121,7 @@
                       <i class="fa fa-instagram"></i>
                     </a>
                   </li>
-                
+
                 </ul>
               </div>
 
@@ -147,7 +150,7 @@
               <ul>
                 <li><a href="sobre">Quem somos?</a></li>
                 <li><a href="contato">Contato</a></li>
-                
+
 
               </ul>
             </div>
@@ -252,7 +255,7 @@
 
   <script src="js/main.js"></script>
   <script src="js/endereco.js" defer></script>
-  
+
 
 
 
