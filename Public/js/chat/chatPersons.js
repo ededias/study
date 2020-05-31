@@ -1,26 +1,27 @@
 $(document).ready(() => {
 
-    function divValue() {
-        var id = ($('#idEnviar').text());
-        $("#idRecebedor").val(id);
+    function scroll() {
+        return $("#chat").stop().animate({ scrollTop: $(".chat")[0].scrollHeight }, 1000);
     }
-
-    function urlChat() {
-        return $("#boxpersons").attr('href')
-    }
-
+    
+    scroll();
     $(document).on('click', '#boxpersons', function (e) {
         e.preventDefault()
-        setInterval(() => {
+        
+        var idEnviar = $(this).data('idenviar');
+        $("#idRecebedor").val(idEnviar);
+        url = this;
+        setInterval(function req() {
             $.ajax({
                 type: 'GET',
-                url: urlChat(),
+                url: url,
                 success: (res) => {
                     $('#chat').html(res)
                 }
             });
-            divValue()
-        }, 2000);
+            scroll();
+        }, 2000)
+        req.abort()
     })
-    // divValue();
+
 })

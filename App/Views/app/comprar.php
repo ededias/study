@@ -18,6 +18,7 @@
                     <form action="/confirmarPagamento" method="POST">
                         <input type="hidden" name="aluno" value="<?php echo $this->view->comprar['usuario'] ?>">
                         <input type="hidden" name="professor" value="<?php echo $this->view->comprar['professor']['idUsuario'] ?>">
+                        <input type="hidden" name="valor" value="<?php echo $this->view->comprar['professor']['valor'] ?>">
                         <script src="https://www.mercadopago.com.br/integrations/v1/web-payment-checkout.js" data-preference-id="<?php echo $this->view->comprar['api'] ?>" data-button-label="Comprar">
                         </script>
                     </form>
@@ -28,7 +29,7 @@
             <div class="col-xl-5 col-lg-5">
                 <div class="courses_sidebar">
                     <div class="video_thumb">
-                        <img src="img/latest_blog/video.png" alt="">
+                        <img src="<?php echo $this->view->comprar['professor']['img'] ?>" alt="">
 
                         </a>
                     </div>

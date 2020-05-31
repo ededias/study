@@ -55,7 +55,7 @@ class AppController extends Action
 		(new AuthController())->validate();
 
 		$atualizar = new CadastroModel();
-
+		print_r($_POST);
 		$atualizar->setIdDescricao($_POST['idDescricao']);
 		$atualizar->setDescricaoAula($_POST['descricaoaula']);
 		$atualizar->setDescricaoPerfil($_POST['descricaoperfil']);
@@ -64,8 +64,8 @@ class AppController extends Action
 		$atualizar->setidUsuario($_SESSION['idUsuario']);
 		$atualizar->setIdPreco($_POST['idPreco']);
 		$atualizar->atualizarCad($atualizar);
-
-		header('location: /perfil');
+		echo "hello world";
+		// header('location: /perfil');
 	}
 
 	public function perfil()
@@ -79,10 +79,11 @@ class AppController extends Action
 		if (!empty($lista)) {
 
 			$this->view->perfil = $lista;
+
 			$this->render('perfil', 'main');
 		} else {
-
-			$lista = $infPessoais->listar1();
+			
+			$lista = $infPessoais->listarUsuario();
 			$this->view->perfil = $lista;
 			$this->render('perfil', 'main');
 		}
@@ -102,7 +103,7 @@ class AppController extends Action
 		$atualizarPerfil->setnome($_POST['nome']);
 		$atualizarPerfil->setidUsuario($_SESSION['idUsuario']);
 		$atualizarPerfil->atualizarPerfil();
-		// header('location: /perfil');
+		header('location: /perfil');
 	}
 
 	function pagamento()
@@ -111,7 +112,14 @@ class AppController extends Action
 		(new AuthController())->validate();
 		$professor = new CadastroModel;
 		$professor->setidUsuario($_GET['professor']);
-		$result = $professor->listar1($professor);
+		if ($_SESSION['perfil'] == 'professor') {
+
+			$result = $professor->listarUsuario();
+		} else {
+
+			$result = $professor->listar1($professor);
+		}
+
 
 		$this->view->pagamento = $result;
 		$this->render('pagamento', 'main');
@@ -152,6 +160,7 @@ class AppController extends Action
 			$pagamento->setPagamentoId($_POST['payment_id']);
 
 			$pagamento->salvarPagamento($pagamento);
+
 			header('location: /main');
 		} else {
 			header('location: /main?erro=true');

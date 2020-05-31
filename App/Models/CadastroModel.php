@@ -392,7 +392,7 @@ class CadastroModel extends Database
 
         $stmt->bindValue(':idMateria', $this->getIdMaterias());
         $stmt->bindValue(':idUsuario', $this->getIdUsuario());
-        
+
         try {
             $stmt->execute();
         } catch (\PDOException $e) {
@@ -434,7 +434,7 @@ class CadastroModel extends Database
                     WHERE idUsuario = :idUsuario AND m.idmaterias = pc.materias_idmaterias AND d.usuario_idUsuario = :idUsuario AND pc.usuario_idUsuario = :idUsuario";
 
         $stmt = self::conn()->prepare($query);
-        print_r($this->getidUsuario());
+
         $stmt->bindValue(":idUsuario", $this->getidUsuario());
 
         try {
@@ -449,23 +449,24 @@ class CadastroModel extends Database
     function listarPerfil($id)
     {
         if ($id['perfil'] == 'professor') {
-            $perfil = 'idProfessor';
-            $perfilInner = 'idAluno';
+            $query = "SELECT u.nome, u.idUsuario, u.img FROM usuario AS u 
+                            INNER JOIN relacaousuario AS r 
+                        WHERE r.idProfessor = :idUsuario AND u.idUsuario = r.idAluno";
         } else {
-            $perfil = 'idAluno';
-            $perfilInner = 'idProfessor';
+
+            $query = "SELECT u.nome, u.idUsuario, u.img FROM usuario AS u 
+                            INNER JOIN relacaousuario AS r
+                            INNER JOIN preco AS pc ON
+                            (pc.usuario_idUsuario = u.idUsuario)
+                        WHERE r.idAluno = :idUsuario AND u.idUsuario = r.idProfessor";
         }
         // query que irá realizar o select dos usuarios
-        $query = "SELECT u.nome, u.idUsuario, u.img, pc.valor FROM usuario AS u 
-					INNER JOIN relacaousuario AS r ON   
-						(r.$perfilInner = u.idUsuario)
-                    INNER JOIN preco AS pc
-                    INNER JOIN materias AS m
-                  WHERE r.$perfil = :idUsuario AND pc.materias_idmaterias =  m.idmaterias";
+
         // SELECT u.nome, u.idUsuario, u.img, m.materia FROM usuario AS u INNER JOIN relacaousuario AS r ON (r.idAluno = u.idUsuario) 
         // INNER JOIN preco AS pc INNER JOIN materias AS m WHERE r.idAluno = 1 AND pc.materias_idmaterias = m.idmaterias
         // estabelece conexacao com banco de dados
         $stmt = self::conn()->prepare($query);
+
         // passa os parametros para query
         $stmt->bindValue(':idUsuario', $id['idUsuario']);
         // executa a query
@@ -481,13 +482,49 @@ class CadastroModel extends Database
         }
     }
 
+
+    function listarUsuario()
+    {
+
+        if ($_SESSION['perfil'] == 'aluno') {
+            $query = "SELECT u.idUsuario, u.nome, u.dataNas, u.email, u.cpf, u.rg, u.telefone,
+                        u.sexo, u.img, d.descricaoPerfil, d.idDescricao
+                    FROM usuario AS u
+                    INNER JOIN descricao AS d ON
+                    (d.usuario_idusuario = :idUsuario)
+                        WHERE u.idUsuario = :idUsuario";
+                    
+        } else {
+
+            $query = "SELECT u.idUsuario, u.nome, u.dataNas, u.email, u.cpf, u.rg, u.telefone,
+                        u.sexo, u.img
+                    FROM usuario AS u
+                        WHERE idUsuario = :idUsuario";
+        }
+
+        $stmt = self::conn()->prepare($query);
+
+        $stmt->bindValue(":idUsuario", $this->getidUsuario());
+        try {
+            $stmt->execute();
+            $listando = $stmt->fetch(\PDO::FETCH_ASSOC);
+            return $listando;
+        } catch (\PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
     function listar1()
     {
         $query = "SELECT u.idUsuario, u.nome, u.dataNas, u.email, u.cpf, u.rg, u.telefone,
-                       u.sexo, u.img, d.descricaoAula, d.descricaoPerfil, pc.valor, d.idDescricao
+                       u.sexo, u.img, d.descricaoAula, d.descricaoPerfil, pc.valor, m.materia, d.idDescricao
                     FROM usuario AS u
-                    INNER JOIN descricao AS d
-                    INNER JOIN preco AS pc
+                    INNER JOIN descricao AS d ON
+                    (d.usuario_idusuario = :idUsuario)
+                    INNER JOIN preco AS pc ON
+                    (pc.usuario_idUsuario = :idUsuario)
+                    INNER JOIN materias AS m ON
+                    (m.idmaterias = pc.materias_idmaterias)
                    WHERE idUsuario = :idUsuario";
 
         $stmt = self::conn()->prepare($query);

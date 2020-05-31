@@ -83,7 +83,7 @@ class AuthController extends UsuarioModel
 				$result = $this->validar();
 				session_start();
 				$_SESSION = $result;
-				header('location: /main');
+				header('location: /perfil');
 			} else {
 				
 				header('location: /registrar?err=e');

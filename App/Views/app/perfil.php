@@ -43,9 +43,12 @@
                                 <h3>Insira o valor hora de sua aula</h3>
                             </label>
                             <div class="form-group">
-                                <input class="form-control" name="valoraula" id="valoraula" type="text" placeholder="ex: R$50,00" value="<?php if (!isset($this->view->perfil['valor'])) $valor = 0;
-                                                                                                                                            else $valor = $this->view->perfil['valor'];
-                                                                                                                                            echo "R$ {$valor},00" ?>">
+                                <input class="form-control" name="valoraula" id="valoraula" type="text" placeholder="ex: R$50,00" value="<?php 
+                                                                                                                                            if (!isset($this->view->perfil['valor'])) 
+                                                                                                                                                $valor = 0;
+                                                                                                                                            else 
+                                                                                                                                                $valor = $this->view->perfil['valor'];
+                                                                                                                                                echo "R$ {$valor},00" ?>">
                             </div>
                             <div class="form-group">
                                 <label for="aulas">
@@ -129,4 +132,3 @@
         </div>
     </div>
 </div>
-<?php print_r($this->view->perfil)?>

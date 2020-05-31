@@ -67,7 +67,7 @@
             <div class="col-xl-5 col-lg-5">
                 <div class="courses_sidebar">
                     <div class="video_thumb">
-                        <img src="img/latest_blog/video.png" alt="">
+                        <img src="<?php echo $this->view->pagamento['img'] ?>" alt="">
 
                         </a>
                     </div>

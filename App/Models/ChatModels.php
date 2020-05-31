@@ -31,14 +31,16 @@ class ChatModels extends Database
                 AS data FROM chat WHERE 
                 (idEnviar = :idEnviar and idReceber = :idReceber) 
                 or 
-                (idEnviar = :idEnviar and idReceber = :idReceber)";
+                (idEnviar = :idReceber and idReceber = :idEnviar)";
 		// estabelece a conexao com o banco de dados
 		$stmt = self::conn()->prepare($query);
 		// passa os parametros para query
+		
 		$stmt->bindValue(':idEnviar', $userId['idEnviar']);
 		$stmt->bindValue(':idReceber', $userId['idReceber']);
 		// executa a query
 		$stmt->execute();
+		
 		// fetchall(\PDO::FETCH_ASSOC) traz um array assossiativo com as mensagens do usuarios
 		// passando para a variavel $dataobj as informacoes necessárias
 		$dataObj = $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -58,18 +60,19 @@ class ChatModels extends Database
 		// para saber qual parametro irá ser passado para a query
 		if ($id['perfil'] == 'professor') {
 
-			$perfil = 'idProfessor';
-			$perfilInner = 'idAluno';
+			$query = "SELECT u.nome, u.idUsuario, r.idAluno, r.idProfessor FROM usuario AS u 
+						INNER JOIN relacaousuario AS r ON 
+							(r.idAluno = u.idUsuario) 
+					WHERE r.idProfessor = :idUsuario";
 		} else {
-
-			$perfil = 'idAluno';
-			$perfilInner = 'idProfessor';
+			$query = "SELECT u.nome, u.idUsuario, r.idAluno, r.idProfessor FROM usuario AS u 
+						INNER JOIN relacaousuario AS r ON 
+							(r.idProfessor = u.idUsuario) 
+					WHERE r.idAluno = :idUsuario";
+			
 		}
 		// query que irá realizar o select dos usuarios
-		$query = "SELECT u.nome, u.idUsuario FROM usuario AS u 
-					INNER JOIN relacaousuario AS r ON 
-						(r.$perfilInner = u.idUsuario) 
-				  WHERE r.$perfil = :idUsuario";
+		
 
 		// estabelece conexacao com banco de dados
 		$stmt = self::conn()->prepare($query);

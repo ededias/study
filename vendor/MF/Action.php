@@ -38,7 +38,7 @@ class Action
 
 	public function content()
 	{
-		// print_r($_POST);
+		
 		$currentClass = get_class($this);
 
 		$currentClass = str_replace("App\\Controllers\\", "", $currentClass);

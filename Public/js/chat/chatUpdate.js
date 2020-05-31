@@ -1,10 +1,10 @@
 $(document).ready(() => {
 
 
-    function divValue() {
-        const id = ($('#idEnviar').text());
-        $("#idRecebedor").val(id);
-    }
+    // function divValue() {
+    //     const id = ($('#idEnviar').text());
+    //     $("#idRecebedor").val(id);
+    // }
 
     // function ajax() {
     //     var data = $(this).serialize();
@@ -34,19 +34,17 @@ $(document).ready(() => {
         });
     }
 
-    function scroll() {
-        return $("#chat").stop().animate({ scrollTop: $(".chat")[0].scrollHeight }, 1000);
-    }
+    
 
-    $('#buttonMsg').click(function() {
-        if (this.id == "buttonMsg") {
-            const interval = setInterval(() => {
-                scroll();
-                // ajax();
-                clearInterval(interval);
-            }, 1000);
-        }
-    });
+    // $('#buttonMsg').click(function() {
+    //     if (this.id == "buttonMsg") {
+    //         const interval = setInterval(() => {
+    //             scroll();
+    //             // ajax();
+    //             clearInterval(interval);
+    //         }, 1000);
+    //     }
+    // });
     // scroll();
     // ajax();
     ajaxP();

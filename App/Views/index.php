@@ -1,4 +1,5 @@
-<?php $url = $_SERVER['REQUEST_URI']; ?>
+<?php $url = $_SERVER['REQUEST_URI'];
+if (isset($_GET)) $err = true ?>
 <!doctype html>
 <html class="no-js" lang="zxx">
 
@@ -72,7 +73,7 @@
             </div>
             <div class="col-12">
               <div class="mobile_menu d-block d-lg-none">
-                
+
               </div>
             </div>
           </div>
@@ -201,15 +202,21 @@
           </a>
         </div>
         <h3>Entrar</h3>
-
+        <?php if ($err == true) : ?>
+          <div class="col-xl-12 col-md-12">
+            <p style="color: red; size: 20px;">E-mail ou senha errados</p>
+          </div>
+        <?php endif; ?>
         <form method="POST" action="/loginValidate">
           <div class="row">
             <div class="col-xl-12 col-md-12">
               <input type="email" name="email" placeholder="Digite seu email">
             </div>
+
             <div class="col-xl-12 col-md-12">
               <input type="password" name="password" placeholder="Senha">
             </div>
+
             <div class="col-xl-12">
               <!-- <input type="submit" value="Entrar" class="boxed_btn_orange"> -->
               <button type="submit" class="boxed_btn_orange">ENTRAR</button>
